@@ -1,0 +1,4 @@
+c:\users\fantaros\documents\Projects\Whisper\bin\Debug\Whisper.dll
+c:\users\fantaros\documents\Projects\Whisper\bin\Debug\Whisper.pdb
+c:\users\fantaros\documents\Projects\Whisper\Whisper\obj\Debug\Whisper.dll
+c:\users\fantaros\documents\Projects\Whisper\Whisper\obj\Debug\Whisper.pdb
