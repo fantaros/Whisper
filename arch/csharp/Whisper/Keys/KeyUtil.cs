@@ -5,8 +5,7 @@ using System.Text;
 
 namespace io.github.fantaros.Whisper.Keys
 {
-    public interface IKey
+    class KeyUtil
     {
-        byte[] GenerateKey(string password, params object[] paramArray);
     }
 }

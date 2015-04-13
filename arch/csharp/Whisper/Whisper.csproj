@@ -40,8 +40,9 @@
     <Compile Include="Base\Logix.cs" />
     <Compile Include="Base\WhisperBlock.cs" />
     <Compile Include="Base\WhisperException.cs" />
-    <Compile Include="Keys\DefaultKey.cs" />
-    <Compile Include="Keys\IKey.cs" />
+    <Compile Include="Keys\IKeys.cs" />
+    <Compile Include="Keys\Keys.cs" />
+    <Compile Include="Keys\KeyUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WhisperCore.cs" />
   </ItemGroup>
