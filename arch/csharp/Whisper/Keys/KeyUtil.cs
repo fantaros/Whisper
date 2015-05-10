@@ -5,7 +5,10 @@ using System.Text;
 
 namespace io.github.fantaros.Whisper.Keys
 {
-    class KeyUtil
+    public class KeyUtil
     {
+        public static IKeys generator() {
+            return new Keys();
+        }
     }
 }
