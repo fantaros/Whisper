@@ -1,4 +1,4 @@
 # Whisper
-Whipser
+Whisper
 ------
 set of Whisper architecture
