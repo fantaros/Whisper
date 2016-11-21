@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		894D6E451DE32B4100B3B434 /* WhisperAlogrithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 894D6E441DE32B4100B3B434 /* WhisperAlogrithm.m */; };
 		899806481DDED16500AAC09C /* WhisperBlock4.m in Sources */ = {isa = PBXBuildFile; fileRef = 899806471DDED16500AAC09C /* WhisperBlock4.m */; };
 		89F4983E1DDD873F007B734F /* Whisper.m in Sources */ = {isa = PBXBuildFile; fileRef = 89F4983D1DDD873F007B734F /* Whisper.m */; };
 		89F4983F1DDD873F007B734F /* Whisper.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 89F4983C1DDD873F007B734F /* Whisper.h */; };
@@ -27,6 +28,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		894D6E431DE32B4100B3B434 /* WhisperAlogrithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhisperAlogrithm.h; sourceTree = "<group>"; };
+		894D6E441DE32B4100B3B434 /* WhisperAlogrithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhisperAlogrithm.m; sourceTree = "<group>"; };
 		899806461DDED16500AAC09C /* WhisperBlock4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhisperBlock4.h; sourceTree = "<group>"; };
 		899806471DDED16500AAC09C /* WhisperBlock4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhisperBlock4.m; sourceTree = "<group>"; };
 		89F498391DDD873F007B734F /* libWhisper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWhisper.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +83,8 @@
 				89F498471DDD880B007B734F /* Logix.m */,
 				899806461DDED16500AAC09C /* WhisperBlock4.h */,
 				899806471DDED16500AAC09C /* WhisperBlock4.m */,
+				894D6E431DE32B4100B3B434 /* WhisperAlogrithm.h */,
+				894D6E441DE32B4100B3B434 /* WhisperAlogrithm.m */,
 			);
 			path = basement;
 			sourceTree = "<group>";
@@ -144,6 +149,7 @@
 			files = (
 				899806481DDED16500AAC09C /* WhisperBlock4.m in Sources */,
 				89F4983E1DDD873F007B734F /* Whisper.m in Sources */,
+				894D6E451DE32B4100B3B434 /* WhisperAlogrithm.m in Sources */,
 				89F498481DDD880B007B734F /* Logix.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

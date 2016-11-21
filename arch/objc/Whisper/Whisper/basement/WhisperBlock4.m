@@ -93,7 +93,7 @@
     self.bytes[from] = [NSNumber numberWithUnsignedChar: (unsigned char)([self.bytes[from] unsignedCharValue] ^ [self.bytes[to] unsignedCharValue])];
 }
 
--(NSArray<NSNumber *> *) acceptByteArray:(NSArray<NSNumber *> *) output offset:(NSInteger) offset {
+-(NSArray *) acceptByteArray:(NSArray *) output offset:(NSInteger) offset {
     NSMutableArray *newOutput = [output mutableCopy];
     for (int i = 0; i < WHISPER_BLOCKSIZE; i++) {
         if (offset + i < output.count) {

@@ -18,7 +18,7 @@
 -(void) blockSwap:(unsigned char) swaper;
 -(void) deBlockSwap:(unsigned char) swaper;
 -(void) swapFrom:(NSInteger) from to:(NSInteger) to;
--(NSArray<NSNumber *> *) acceptByteArray:(NSArray<NSNumber *> *) output offset:(NSInteger) offset;
+-(NSArray *) acceptByteArray:(NSArray *) output offset:(NSInteger) offset;
 -(void) whispingWithOffset:(NSInteger) offset function:(unsigned char) function keys:(unsigned char) keys;
 
 @end
