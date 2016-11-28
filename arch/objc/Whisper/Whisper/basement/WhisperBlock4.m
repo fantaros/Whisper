@@ -19,6 +19,10 @@
 
 @implementation WhisperBlock4
 
++ (instancetype) whisperBlock4 {
+    return [[WhisperBlock4 alloc] init];
+}
+
 + (instancetype) whisperBlock4WithByte0:(unsigned char) byte0 byte1:(unsigned char) byte1 byte2:(unsigned char) byte2 byte3:(unsigned char) byte3 {
     return [[WhisperBlock4 alloc] initWithByte0:byte0 byte1:byte1 byte2:byte2 byte3:byte3];
 }

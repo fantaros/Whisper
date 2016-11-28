@@ -22,6 +22,10 @@
     return [[WhisperData alloc] init];
 }
 
++ (instancetype) whisperDataWithCapacity:(NSUInteger) capacity {
+    return [[WhisperData alloc] init];
+}
+
 + (instancetype) whisperDataWithUnsignedCharArray:(NSArray *)array {
     return [[WhisperData alloc] initWithArray:array];
 }
@@ -47,6 +51,14 @@
     return self;
 }
 
+- (instancetype) initWithCapacity:(NSUInteger) capacity {
+    self = [super init];
+    if (self) {
+        _byteArray = [[NSMutableArray alloc] initWithCapacity:capacity];
+    }
+    return self;
+}
+
 - (instancetype) initWithArray:(NSArray *)array {
     self = [super init];
     if (self){
@@ -55,29 +67,47 @@
     return self;
 }
 
+- (void) setUnsignedCharValue:(unsigned char) value offset:(NSUInteger) offset {
+    if (offset < [self dataLength]) {
+        self.byteArray[offset] = [NSNumber numberWithUnsignedChar:offset];
+    }
+}
+
 - (void) addUnsignedCharValue:(unsigned char) value {
-    [self.resultData addObject:[NSNumber numberWithUnsignedChar:value]];
+    [self.byteArray addObject:[NSNumber numberWithUnsignedChar:value]];
+}
+
+- (void) setNumber:(NSNumber *) number offset:(NSUInteger) offset {
+    if (offset < [self dataLength]) {
+        self.byteArray[offset] = [number copy];
+    }
 }
 
 - (void) addNumber:(NSNumber *) number {
     if (number != nil) {
-        [self.resultData addObject:[NSNumber numberWithUnsignedChar: [number unsignedCharValue]]];
+        [self.byteArray addObject:[NSNumber numberWithUnsignedChar: [number unsignedCharValue]]];
+    }
+}
+
+- (void) acceptByteArray:(NSArray *)byteArray startOffset:(NSUInteger) offset {
+    for (NSInteger i = 0; i < 4; ++i) {
+        [self setNumber:[byteArray[i] copy] offset:offset + i];
     }
 }
 
 - (void) insertResultData:(NSArray *)array atIndexes:(NSIndexSet *)indexes {
     if (array != nil && indexes != nil) {
-        [self.resultData insertObjects:array atIndexes:indexes];
+        [self.byteArray insertObjects:array atIndexes:indexes];
     }
 }
 
 - (NSInteger) dataLength {
-    return self.resultData.count != NSNotFound ? self.resultData.count : -1;
+    return self.byteArray.count != NSNotFound ? self.byteArray.count : -1;
 }
 
 - (unsigned char) unsignedCharValueAtIndex:(NSUInteger) offset {
     if (offset < [self dataLength]) {
-        return [[self.resultData objectAtIndex:offset] unsignedCharValue];
+        return [[self.byteArray objectAtIndex:offset] unsignedCharValue];
     }
     return 0;
 }

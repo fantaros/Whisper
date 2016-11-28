@@ -12,6 +12,7 @@
 
 @interface WhisperBlock4 : NSObject
 
++ (instancetype) whisperBlock4;
 + (instancetype) whisperBlock4WithByte0:(unsigned char) byte0 byte1:(unsigned char) byte1 byte2:(unsigned char) byte2 byte3:(unsigned char) byte3;
 + (instancetype) whisperBlock4WithByteArray:(NSArray<NSNumber *> *) byteArray;
 + (instancetype) whisperBlock4WithBigByteArray:(NSArray<NSNumber *> *) bigArray offset:(NSUInteger) offset;
@@ -19,6 +20,8 @@
 //-(instancetype) initWithByte0:(unsigned char) byte0 byte1:(unsigned char) byte1 byte2:(unsigned char) byte2 byte3:(unsigned char) byte3;
 //-(instancetype) initWithByteArray:(NSArray<NSNumber *> *) byteArray;
 //-(instancetype) initWithBigByteArray:(NSArray<NSNumber *> *) bigArray offset:(NSUInteger) offset;
+
+- (NSMutableArray *) bytes;
 
 - (void) refreshDataWithBigByteArray:(NSArray<NSNumber *> *) bigArray offset:(NSUInteger) offset;
 - (void) blockSwap:(unsigned char) swaper;
