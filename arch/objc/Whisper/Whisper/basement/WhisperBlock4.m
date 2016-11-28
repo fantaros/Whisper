@@ -19,45 +19,65 @@
 
 @implementation WhisperBlock4
 
--(NSMutableArray *) bytes {
++ (instancetype) whisperBlock4WithByte0:(unsigned char) byte0 byte1:(unsigned char) byte1 byte2:(unsigned char) byte2 byte3:(unsigned char) byte3 {
+    return [[WhisperBlock4 alloc] initWithByte0:byte0 byte1:byte1 byte2:byte2 byte3:byte3];
+}
+
++ (instancetype) whisperBlock4WithByteArray:(NSArray<NSNumber *> *) byteArray {
+    return [[WhisperBlock4 alloc] initWithByteArray:byteArray];
+}
+
++ (instancetype) whisperBlock4WithBigByteArray:(NSArray<NSNumber *> *) bigArray offset:(NSUInteger) offset {
+    return [[WhisperBlock4 alloc] initWithBigByteArray:bigArray offset:offset];
+}
+
+- (NSMutableArray *) bytes {
     if (_bytes == nil) {
         _bytes = [[NSMutableArray alloc] initWithCapacity: WHISPER_BLOCKSIZE];
     }
     return _bytes;
 }
 
--(Logix *) logix {
+- (Logix *) logix {
     if (_logix == nil) {
         _logix = [[Logix alloc] init];
     }
     return _logix;
 }
 
--(instancetype) init {
+- (instancetype) init {
     self = [super init];
     if (self) {
-        [self setupSelfWithByteArray:@[@0,@0,@0,@0]];
+        [self refreshDataWithByteArray:@[@0,@0,@0,@0]];
     }
     return self;
 }
 
--(instancetype) initWithByte0:(unsigned char) byte0 byte1:(unsigned char) byte1 byte2:(unsigned char) byte2 byte3:(unsigned char) byte3 {
+- (instancetype) initWithByte0:(unsigned char) byte0 byte1:(unsigned char) byte1 byte2:(unsigned char) byte2 byte3:(unsigned char) byte3 {
     self = [super init];
     if (self) {
-        [self setupSelfWithByteArray: [NSArray arrayWithObjects:[NSNumber numberWithUnsignedChar:byte0], [NSNumber numberWithUnsignedChar:byte1], [NSNumber numberWithUnsignedChar:byte2], [NSNumber numberWithUnsignedChar:byte3], nil]];
+        [self refreshDataWithByteArray: [NSArray arrayWithObjects:[NSNumber numberWithUnsignedChar:byte0], [NSNumber numberWithUnsignedChar:byte1], [NSNumber numberWithUnsignedChar:byte2], [NSNumber numberWithUnsignedChar:byte3], nil]];
     }
     return self;
 }
 
--(instancetype) initWithByteArray:(NSArray<NSNumber *> *)byteArray {
+- (instancetype) initWithByteArray:(NSArray<NSNumber *> *)byteArray {
     self = [super init];
     if (self) {
-        [self setupSelfWithByteArray:byteArray];
+        [self refreshDataWithByteArray:byteArray];
     }
     return self;
 }
 
--(void) setupSelfWithByteArray:(NSArray<NSNumber *> *) array {
+- (instancetype) initWithBigByteArray:(NSArray<NSNumber *> *)bigArray offset:(NSUInteger)offset {
+    self = [super init];
+    if (self) {
+        [self refreshDataWithBigByteArray:bigArray offset:offset];
+    }
+    return self;
+}
+
+- (void) refreshDataWithByteArray:(NSArray<NSNumber *> *) array {
     [self.bytes removeAllObjects];
     for (NSInteger i = 0; i < WHISPER_BLOCKSIZE; ++i) {
         if (i < array.count) {
@@ -66,7 +86,16 @@
     }
 }
 
--(void) blockSwap:(unsigned char) swaper {
+- (void) refreshDataWithBigByteArray:(NSArray<NSNumber *> *) bigArray offset:(NSUInteger) offset{
+    [self.bytes removeAllObjects];
+    for (NSInteger i = 0; i < WHISPER_BLOCKSIZE; ++i) {
+        if (i < 4) {
+            [self.bytes addObject:bigArray[offset + i]];
+        }
+    }
+}
+
+- (void) blockSwap:(unsigned char) swaper {
     NSMutableArray *newarray = [[NSMutableArray alloc] initWithCapacity: WHISPER_BLOCKSIZE];
     [newarray addObject: self.bytes[(unsigned char)((swaper & 0xc0) >> 6)]];
     [newarray addObject: self.bytes[(unsigned char)((swaper & 0x30) >> 4)]];
@@ -75,7 +104,7 @@
     _bytes = [newarray copy];
 }
 
--(void) deBlockSwap:(unsigned char) swaper {
+- (void) deBlockSwap:(unsigned char) swaper {
     NSMutableArray *newarray = [[NSMutableArray alloc] initWithCapacity: WHISPER_BLOCKSIZE];
     for (NSInteger i = 0; i < WHISPER_BLOCKSIZE; ++i) {
         [newarray addObject:[NSNumber numberWithInteger: i]];
@@ -87,13 +116,13 @@
     self.bytes = [newarray copy];
 }
 
--(void) swapFrom:(NSInteger) from to:(NSInteger) to {
+- (void) swapFrom:(NSInteger) from to:(NSInteger) to {
     self.bytes[from] = [NSNumber numberWithUnsignedChar: (unsigned char)([self.bytes[from] unsignedCharValue] ^ [self.bytes[to] unsignedCharValue])];
     self.bytes[to] = [NSNumber numberWithUnsignedChar: (unsigned char)([self.bytes[from] unsignedCharValue] ^ [self.bytes[to] unsignedCharValue])];
     self.bytes[from] = [NSNumber numberWithUnsignedChar: (unsigned char)([self.bytes[from] unsignedCharValue] ^ [self.bytes[to] unsignedCharValue])];
 }
 
--(NSArray *) acceptByteArray:(NSArray *) output offset:(NSInteger) offset {
+- (NSArray *) acceptByteArray:(NSArray *) output offset:(NSInteger) offset {
     NSMutableArray *newOutput = [output mutableCopy];
     for (int i = 0; i < WHISPER_BLOCKSIZE; i++) {
         if (offset + i < output.count) {
@@ -103,7 +132,7 @@
     return [newOutput copy];
 }
 
--(void) whispingWithOffset:(NSInteger) offset function:(unsigned char) function keys:(unsigned char) keys{
+- (void) whispingWithOffset:(NSInteger) offset function:(unsigned char) function keys:(unsigned char) keys{
     self.bytes[offset] = [NSNumber numberWithUnsignedChar: [self.logix logixWithOperatorByte1:[self.bytes[offset] unsignedCharValue] operatorByte2:keys methodType: function]];
 }
 
