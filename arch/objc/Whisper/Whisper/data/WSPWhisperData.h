@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WhisperData : NSObject
+@interface WSPWhisperData : NSObject
 
 + (instancetype) whisperData;
 + (instancetype) whisperDataWithCapacity:(NSUInteger) capacity;

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WhisperKey : NSObject
+@interface WSPWhisperKey : NSObject
 
 + (instancetype) whisperKeyWithPassword: (NSString *) password keyLength:(NSUInteger) keyLength;
 

@@ -7,13 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		890A1F3A1DEC26B30002D528 /* WhisperAlogrithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F301DEC26B30002D528 /* WhisperAlogrithm.m */; };
-		890A1F3B1DEC26B30002D528 /* WhisperData.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F321DEC26B30002D528 /* WhisperData.m */; };
-		890A1F3C1DEC26B30002D528 /* WhisperKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F341DEC26B30002D528 /* WhisperKey.m */; };
-		890A1F3D1DEC26B30002D528 /* Logix.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F371DEC26B30002D528 /* Logix.m */; };
-		890A1F3E1DEC26B30002D528 /* WhisperBlock4.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F391DEC26B30002D528 /* WhisperBlock4.m */; };
-		89F4983E1DDD873F007B734F /* Whisper.m in Sources */ = {isa = PBXBuildFile; fileRef = 89F4983D1DDD873F007B734F /* Whisper.m */; };
-		89F4983F1DDD873F007B734F /* Whisper.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 89F4983C1DDD873F007B734F /* Whisper.h */; };
+		890A1F4B1DEC43290002D528 /* WSPLogix.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F411DEC43290002D528 /* WSPLogix.m */; };
+		890A1F4C1DEC43290002D528 /* WSPWhisperBlock4.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F431DEC43290002D528 /* WSPWhisperBlock4.m */; };
+		890A1F4D1DEC43290002D528 /* WSPWhisperData.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F461DEC43290002D528 /* WSPWhisperData.m */; };
+		890A1F4E1DEC43290002D528 /* WSPWhisperKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F481DEC43290002D528 /* WSPWhisperKey.m */; };
+		890A1F4F1DEC43290002D528 /* WSPWhisperAlogrithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F4A1DEC43290002D528 /* WSPWhisperAlogrithm.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,26 +21,23 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				89F4983F1DDD873F007B734F /* Whisper.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		890A1F2F1DEC26B30002D528 /* WhisperAlogrithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhisperAlogrithm.h; sourceTree = "<group>"; };
-		890A1F301DEC26B30002D528 /* WhisperAlogrithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhisperAlogrithm.m; sourceTree = "<group>"; };
-		890A1F311DEC26B30002D528 /* WhisperData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhisperData.h; sourceTree = "<group>"; };
-		890A1F321DEC26B30002D528 /* WhisperData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhisperData.m; sourceTree = "<group>"; };
-		890A1F331DEC26B30002D528 /* WhisperKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhisperKey.h; sourceTree = "<group>"; };
-		890A1F341DEC26B30002D528 /* WhisperKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhisperKey.m; sourceTree = "<group>"; };
-		890A1F361DEC26B30002D528 /* Logix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logix.h; sourceTree = "<group>"; };
-		890A1F371DEC26B30002D528 /* Logix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Logix.m; sourceTree = "<group>"; };
-		890A1F381DEC26B30002D528 /* WhisperBlock4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhisperBlock4.h; sourceTree = "<group>"; };
-		890A1F391DEC26B30002D528 /* WhisperBlock4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhisperBlock4.m; sourceTree = "<group>"; };
+		890A1F401DEC43290002D528 /* WSPLogix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPLogix.h; sourceTree = "<group>"; };
+		890A1F411DEC43290002D528 /* WSPLogix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPLogix.m; sourceTree = "<group>"; };
+		890A1F421DEC43290002D528 /* WSPWhisperBlock4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPWhisperBlock4.h; sourceTree = "<group>"; };
+		890A1F431DEC43290002D528 /* WSPWhisperBlock4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPWhisperBlock4.m; sourceTree = "<group>"; };
+		890A1F451DEC43290002D528 /* WSPWhisperData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPWhisperData.h; sourceTree = "<group>"; };
+		890A1F461DEC43290002D528 /* WSPWhisperData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPWhisperData.m; sourceTree = "<group>"; };
+		890A1F471DEC43290002D528 /* WSPWhisperKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPWhisperKey.h; sourceTree = "<group>"; };
+		890A1F481DEC43290002D528 /* WSPWhisperKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPWhisperKey.m; sourceTree = "<group>"; };
+		890A1F491DEC43290002D528 /* WSPWhisperAlogrithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPWhisperAlogrithm.h; sourceTree = "<group>"; };
+		890A1F4A1DEC43290002D528 /* WSPWhisperAlogrithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPWhisperAlogrithm.m; sourceTree = "<group>"; };
 		89F498391DDD873F007B734F /* libWhisper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWhisper.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		89F4983C1DDD873F007B734F /* Whisper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Whisper.h; sourceTree = "<group>"; };
-		89F4983D1DDD873F007B734F /* Whisper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Whisper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,28 +51,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		890A1F2E1DEC26B30002D528 /* algorithm */ = {
+		890A1F3F1DEC43290002D528 /* basement */ = {
 			isa = PBXGroup;
 			children = (
-				890A1F2F1DEC26B30002D528 /* WhisperAlogrithm.h */,
-				890A1F301DEC26B30002D528 /* WhisperAlogrithm.m */,
-				890A1F311DEC26B30002D528 /* WhisperData.h */,
-				890A1F321DEC26B30002D528 /* WhisperData.m */,
-				890A1F331DEC26B30002D528 /* WhisperKey.h */,
-				890A1F341DEC26B30002D528 /* WhisperKey.m */,
-			);
-			path = algorithm;
-			sourceTree = "<group>";
-		};
-		890A1F351DEC26B30002D528 /* basement */ = {
-			isa = PBXGroup;
-			children = (
-				890A1F361DEC26B30002D528 /* Logix.h */,
-				890A1F371DEC26B30002D528 /* Logix.m */,
-				890A1F381DEC26B30002D528 /* WhisperBlock4.h */,
-				890A1F391DEC26B30002D528 /* WhisperBlock4.m */,
+				890A1F401DEC43290002D528 /* WSPLogix.h */,
+				890A1F411DEC43290002D528 /* WSPLogix.m */,
+				890A1F421DEC43290002D528 /* WSPWhisperBlock4.h */,
+				890A1F431DEC43290002D528 /* WSPWhisperBlock4.m */,
 			);
 			path = basement;
+			sourceTree = "<group>";
+		};
+		890A1F441DEC43290002D528 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				890A1F451DEC43290002D528 /* WSPWhisperData.h */,
+				890A1F461DEC43290002D528 /* WSPWhisperData.m */,
+				890A1F471DEC43290002D528 /* WSPWhisperKey.h */,
+				890A1F481DEC43290002D528 /* WSPWhisperKey.m */,
+			);
+			path = data;
 			sourceTree = "<group>";
 		};
 		89F498301DDD873E007B734F = {
@@ -99,10 +92,10 @@
 		89F4983B1DDD873F007B734F /* Whisper */ = {
 			isa = PBXGroup;
 			children = (
-				890A1F2E1DEC26B30002D528 /* algorithm */,
-				890A1F351DEC26B30002D528 /* basement */,
-				89F4983C1DDD873F007B734F /* Whisper.h */,
-				89F4983D1DDD873F007B734F /* Whisper.m */,
+				890A1F3F1DEC43290002D528 /* basement */,
+				890A1F441DEC43290002D528 /* data */,
+				890A1F491DEC43290002D528 /* WSPWhisperAlogrithm.h */,
+				890A1F4A1DEC43290002D528 /* WSPWhisperAlogrithm.m */,
 			);
 			path = Whisper;
 			sourceTree = "<group>";
@@ -165,12 +158,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				890A1F3D1DEC26B30002D528 /* Logix.m in Sources */,
-				890A1F3A1DEC26B30002D528 /* WhisperAlogrithm.m in Sources */,
-				890A1F3B1DEC26B30002D528 /* WhisperData.m in Sources */,
-				890A1F3C1DEC26B30002D528 /* WhisperKey.m in Sources */,
-				89F4983E1DDD873F007B734F /* Whisper.m in Sources */,
-				890A1F3E1DEC26B30002D528 /* WhisperBlock4.m in Sources */,
+				890A1F4D1DEC43290002D528 /* WSPWhisperData.m in Sources */,
+				890A1F4C1DEC43290002D528 /* WSPWhisperBlock4.m in Sources */,
+				890A1F4B1DEC43290002D528 /* WSPLogix.m in Sources */,
+				890A1F4F1DEC43290002D528 /* WSPWhisperAlogrithm.m in Sources */,
+				890A1F4E1DEC43290002D528 /* WSPWhisperKey.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

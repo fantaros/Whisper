@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Logix : NSObject
+@interface WSPLogix : NSObject
 
 -(unsigned char) mappedLogixTableH:(unsigned char) src;
 

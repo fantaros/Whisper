@@ -10,7 +10,7 @@
 
 #define WHISPER_BLOCKSIZE 4
 
-@interface WhisperBlock4 : NSObject
+@interface WSPWhisperBlock4 : NSObject
 
 + (instancetype) whisperBlock4;
 + (instancetype) whisperBlock4WithByte0:(unsigned char) byte0 byte1:(unsigned char) byte1 byte2:(unsigned char) byte2 byte3:(unsigned char) byte3;

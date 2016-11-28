@@ -6,15 +6,15 @@
 //  Copyright © 2016年 fantaros. All rights reserved.
 //
 
-#import "Logix.h"
+#import "WSPLogix.h"
 
-@interface Logix()
+@interface WSPLogix()
 
 @property (nonatomic, assign) NSArray<NSNumber *> *logixTable;
 
 @end
 
-@implementation Logix
+@implementation WSPLogix
 
 -(instancetype) init {
     self = [super init];

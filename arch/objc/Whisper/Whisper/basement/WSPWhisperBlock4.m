@@ -6,33 +6,33 @@
 //  Copyright © 2016年 fantaros. All rights reserved.
 //
 
-#import "WhisperBlock4.h"
-#import "Logix.h"
+#import "WSPWhisperBlock4.h"
+#import "WSPLogix.h"
 
 
-@interface WhisperBlock4()
+@interface WSPWhisperBlock4()
 
 @property (nonatomic, copy) NSMutableArray *bytes;
-@property (nonatomic, strong) Logix *logix;
+@property (nonatomic, strong) WSPLogix *logix;
 
 @end
 
-@implementation WhisperBlock4
+@implementation WSPWhisperBlock4
 
 + (instancetype) whisperBlock4 {
-    return [[WhisperBlock4 alloc] init];
+    return [[WSPWhisperBlock4 alloc] init];
 }
 
 + (instancetype) whisperBlock4WithByte0:(unsigned char) byte0 byte1:(unsigned char) byte1 byte2:(unsigned char) byte2 byte3:(unsigned char) byte3 {
-    return [[WhisperBlock4 alloc] initWithByte0:byte0 byte1:byte1 byte2:byte2 byte3:byte3];
+    return [[WSPWhisperBlock4 alloc] initWithByte0:byte0 byte1:byte1 byte2:byte2 byte3:byte3];
 }
 
 + (instancetype) whisperBlock4WithByteArray:(NSArray<NSNumber *> *) byteArray {
-    return [[WhisperBlock4 alloc] initWithByteArray:byteArray];
+    return [[WSPWhisperBlock4 alloc] initWithByteArray:byteArray];
 }
 
 + (instancetype) whisperBlock4WithBigByteArray:(NSArray<NSNumber *> *) bigArray offset:(NSUInteger) offset {
-    return [[WhisperBlock4 alloc] initWithBigByteArray:bigArray offset:offset];
+    return [[WSPWhisperBlock4 alloc] initWithBigByteArray:bigArray offset:offset];
 }
 
 - (NSMutableArray *) bytes {
@@ -42,9 +42,9 @@
     return _bytes;
 }
 
-- (Logix *) logix {
+- (WSPLogix *) logix {
     if (_logix == nil) {
-        _logix = [[Logix alloc] init];
+        _logix = [[WSPLogix alloc] init];
     }
     return _logix;
 }

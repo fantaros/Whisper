@@ -6,28 +6,28 @@
 //  Copyright © 2016年 fantaros. All rights reserved.
 //
 
-#import "WhisperData.h"
+#import "WSPWhisperData.h"
 
-@interface WhisperData ()
+@interface WSPWhisperData ()
 
 @property (strong, nonatomic) NSMutableArray *byteArray;
 
 @end
 
-@implementation WhisperData
+@implementation WSPWhisperData
 
 @synthesize byteArray = _byteArray;
 
 + (instancetype) whisperData {
-    return [[WhisperData alloc] init];
+    return [[WSPWhisperData alloc] init];
 }
 
 + (instancetype) whisperDataWithCapacity:(NSUInteger) capacity {
-    return [[WhisperData alloc] init];
+    return [[WSPWhisperData alloc] init];
 }
 
 + (instancetype) whisperDataWithUnsignedCharArray:(NSArray *)array {
-    return [[WhisperData alloc] initWithArray:array];
+    return [[WSPWhisperData alloc] initWithArray:array];
 }
 
 - (NSMutableArray *) byteArray {

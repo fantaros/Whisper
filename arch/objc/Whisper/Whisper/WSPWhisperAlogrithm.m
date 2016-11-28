@@ -6,24 +6,24 @@
 //  Copyright © 2016年 fantaros. All rights reserved.
 //
 
-#import "WhisperAlogrithm.h"
-#import "WhisperBlock4.h"
+#import "WSPWhisperAlogrithm.h"
+#import "WSPWhisperBlock4.h"
 
-@interface WhisperAlogrithm ()
+@interface WSPWhisperAlogrithm ()
 
-@property (strong, nonatomic) WhisperBlock4 *block;
+@property (strong, nonatomic) WSPWhisperBlock4 *block;
 
 @end
 
-@implementation WhisperAlogrithm
+@implementation WSPWhisperAlogrithm
 
-- (WhisperData *) encrypto:(WhisperData *)baseData key:(WhisperKey *) password {
+- (WSPWhisperData *) encrypto:(WSPWhisperData *)baseData key:(WSPWhisperKey *) password {
     NSArray *org = baseData.byteArray;
     if (org != nil) {
         NSInteger len = org.count;
         NSInteger olen = (NSInteger)((len / 4.0) + 0.9) * 4;
-        WhisperData *oData = [WhisperData whisperDataWithCapacity:olen];
-        self.block = [WhisperBlock4 whisperBlock4];
+        WSPWhisperData *oData = [WSPWhisperData whisperDataWithCapacity:olen];
+        self.block = [WSPWhisperBlock4 whisperBlock4];
         NSInteger j;
         for (NSInteger i = 0; i < org.count; i += 4) {
             [self.block refreshDataWithBigByteArray:org offset:i];
@@ -41,12 +41,12 @@
     return nil;
 }
 
-- (WhisperData *) decrypto:(WhisperData *)baseData key:(WhisperKey *) password {
+- (WSPWhisperData *) decrypto:(WSPWhisperData *)baseData key:(WSPWhisperKey *) password {
     NSArray *org = baseData.byteArray;
     if (org != nil) {
         NSInteger len = org.count;
-        WhisperData *oData = [WhisperData whisperDataWithCapacity:len];
-        self.block = [WhisperBlock4 whisperBlock4];
+        WSPWhisperData *oData = [WSPWhisperData whisperDataWithCapacity:len];
+        self.block = [WSPWhisperBlock4 whisperBlock4];
         NSInteger j;
         for (NSInteger i = 0; i < org.count; i += 4) {
             [self.block refreshDataWithBigByteArray:org offset:i];

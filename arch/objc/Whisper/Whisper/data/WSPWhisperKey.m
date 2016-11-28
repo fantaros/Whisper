@@ -6,9 +6,9 @@
 //  Copyright © 2016年 fantaros. All rights reserved.
 //
 
-#import "WhisperKey.h"
+#import "WSPWhisperKey.h"
 
-@interface WhisperKey()
+@interface WSPWhisperKey()
 
 @property (copy, nonatomic) NSArray *whisperStoredKey;
 @property (copy, nonatomic) NSArray *whisperStoredRing;
@@ -18,10 +18,10 @@
 
 @end
 
-@implementation WhisperKey
+@implementation WSPWhisperKey
 
 + (instancetype) whisperKeyWithPassword: (NSString *) password keyLength:(NSUInteger) keyLength {
-    return [[WhisperKey alloc] initWithPassword:password keyLength:keyLength];
+    return [[WSPWhisperKey alloc] initWithPassword:password keyLength:keyLength];
 }
 
 - (NSArray *) WhisperTable {
