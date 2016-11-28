@@ -10,7 +10,7 @@
 #import "WSPWhisperData.h"
 #import "WSPWhisperKey.h"
 
-@interface WSPWhisperAlogrithm : NSObject
+@interface WSPWhisperAlgorithm : NSObject
 
 - (WSPWhisperData *) encrypto:(WSPWhisperData *)baseData key:(WSPWhisperKey *) password;
 

@@ -11,8 +11,20 @@
 		890A1F4C1DEC43290002D528 /* WSPWhisperBlock4.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F431DEC43290002D528 /* WSPWhisperBlock4.m */; };
 		890A1F4D1DEC43290002D528 /* WSPWhisperData.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F461DEC43290002D528 /* WSPWhisperData.m */; };
 		890A1F4E1DEC43290002D528 /* WSPWhisperKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F481DEC43290002D528 /* WSPWhisperKey.m */; };
-		890A1F4F1DEC43290002D528 /* WSPWhisperAlogrithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F4A1DEC43290002D528 /* WSPWhisperAlogrithm.m */; };
+		890A1F4F1DEC43290002D528 /* WSPWhisperAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F4A1DEC43290002D528 /* WSPWhisperAlgorithm.m */; };
+		890A1F571DEC43ED0002D528 /* WhisperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F561DEC43ED0002D528 /* WhisperTests.m */; };
+		890A1F591DEC43ED0002D528 /* libWhisper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89F498391DDD873F007B734F /* libWhisper.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		890A1F5A1DEC43ED0002D528 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 89F498311DDD873E007B734F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89F498381DDD873E007B734F;
+			remoteInfo = Whisper;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		89F498371DDD873E007B734F /* CopyFiles */ = {
@@ -35,12 +47,23 @@
 		890A1F461DEC43290002D528 /* WSPWhisperData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPWhisperData.m; sourceTree = "<group>"; };
 		890A1F471DEC43290002D528 /* WSPWhisperKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPWhisperKey.h; sourceTree = "<group>"; };
 		890A1F481DEC43290002D528 /* WSPWhisperKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPWhisperKey.m; sourceTree = "<group>"; };
-		890A1F491DEC43290002D528 /* WSPWhisperAlogrithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPWhisperAlogrithm.h; sourceTree = "<group>"; };
-		890A1F4A1DEC43290002D528 /* WSPWhisperAlogrithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPWhisperAlogrithm.m; sourceTree = "<group>"; };
+		890A1F491DEC43290002D528 /* WSPWhisperAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPWhisperAlgorithm.h; sourceTree = "<group>"; };
+		890A1F4A1DEC43290002D528 /* WSPWhisperAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPWhisperAlgorithm.m; sourceTree = "<group>"; };
+		890A1F541DEC43ED0002D528 /* WhisperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhisperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		890A1F561DEC43ED0002D528 /* WhisperTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WhisperTests.m; sourceTree = "<group>"; };
+		890A1F581DEC43ED0002D528 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89F498391DDD873F007B734F /* libWhisper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWhisper.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		890A1F511DEC43ED0002D528 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				890A1F591DEC43ED0002D528 /* libWhisper.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		89F498361DDD873E007B734F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -73,10 +96,20 @@
 			path = data;
 			sourceTree = "<group>";
 		};
+		890A1F551DEC43ED0002D528 /* WhisperTests */ = {
+			isa = PBXGroup;
+			children = (
+				890A1F561DEC43ED0002D528 /* WhisperTests.m */,
+				890A1F581DEC43ED0002D528 /* Info.plist */,
+			);
+			path = WhisperTests;
+			sourceTree = "<group>";
+		};
 		89F498301DDD873E007B734F = {
 			isa = PBXGroup;
 			children = (
 				89F4983B1DDD873F007B734F /* Whisper */,
+				890A1F551DEC43ED0002D528 /* WhisperTests */,
 				89F4983A1DDD873F007B734F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				89F498391DDD873F007B734F /* libWhisper.a */,
+				890A1F541DEC43ED0002D528 /* WhisperTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,8 +128,8 @@
 			children = (
 				890A1F3F1DEC43290002D528 /* basement */,
 				890A1F441DEC43290002D528 /* data */,
-				890A1F491DEC43290002D528 /* WSPWhisperAlogrithm.h */,
-				890A1F4A1DEC43290002D528 /* WSPWhisperAlogrithm.m */,
+				890A1F491DEC43290002D528 /* WSPWhisperAlgorithm.h */,
+				890A1F4A1DEC43290002D528 /* WSPWhisperAlgorithm.m */,
 			);
 			path = Whisper;
 			sourceTree = "<group>";
@@ -103,6 +137,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		890A1F531DEC43ED0002D528 /* WhisperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 890A1F5C1DEC43ED0002D528 /* Build configuration list for PBXNativeTarget "WhisperTests" */;
+			buildPhases = (
+				890A1F501DEC43ED0002D528 /* Sources */,
+				890A1F511DEC43ED0002D528 /* Frameworks */,
+				890A1F521DEC43ED0002D528 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				890A1F5B1DEC43ED0002D528 /* PBXTargetDependency */,
+			);
+			name = WhisperTests;
+			productName = WhisperTests;
+			productReference = 890A1F541DEC43ED0002D528 /* WhisperTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		89F498381DDD873E007B734F /* Whisper */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 89F498421DDD873F007B734F /* Build configuration list for PBXNativeTarget "Whisper" */;
@@ -129,6 +181,11 @@
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = fantaros;
 				TargetAttributes = {
+					890A1F531DEC43ED0002D528 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = GPN39T5426;
+						ProvisioningStyle = Automatic;
+					};
 					89F498381DDD873E007B734F = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = GPN39T5426;
@@ -149,11 +206,30 @@
 			projectRoot = "";
 			targets = (
 				89F498381DDD873E007B734F /* Whisper */,
+				890A1F531DEC43ED0002D528 /* WhisperTests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		890A1F521DEC43ED0002D528 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		890A1F501DEC43ED0002D528 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				890A1F571DEC43ED0002D528 /* WhisperTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		89F498351DDD873E007B734F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -161,14 +237,44 @@
 				890A1F4D1DEC43290002D528 /* WSPWhisperData.m in Sources */,
 				890A1F4C1DEC43290002D528 /* WSPWhisperBlock4.m in Sources */,
 				890A1F4B1DEC43290002D528 /* WSPLogix.m in Sources */,
-				890A1F4F1DEC43290002D528 /* WSPWhisperAlogrithm.m in Sources */,
+				890A1F4F1DEC43290002D528 /* WSPWhisperAlgorithm.m in Sources */,
 				890A1F4E1DEC43290002D528 /* WSPWhisperKey.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		890A1F5B1DEC43ED0002D528 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89F498381DDD873E007B734F /* Whisper */;
+			targetProxy = 890A1F5A1DEC43ED0002D528 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		890A1F5D1DEC43ED0002D528 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = GPN39T5426;
+				INFOPLIST_FILE = WhisperTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.fantaros.WhisperTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		890A1F5E1DEC43ED0002D528 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = GPN39T5426;
+				INFOPLIST_FILE = WhisperTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.fantaros.WhisperTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		89F498401DDD873F007B734F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -284,6 +390,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		890A1F5C1DEC43ED0002D528 /* Build configuration list for PBXNativeTarget "WhisperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				890A1F5D1DEC43ED0002D528 /* Debug */,
+				890A1F5E1DEC43ED0002D528 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		89F498341DDD873E007B734F /* Build configuration list for PBXProject "Whisper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

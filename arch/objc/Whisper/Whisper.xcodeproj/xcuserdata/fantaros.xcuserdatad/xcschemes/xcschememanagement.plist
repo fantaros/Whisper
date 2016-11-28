@@ -9,9 +9,19 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>WhisperTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>890A1F531DEC43ED0002D528</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>89F498381DDD873E007B734F</key>
 		<dict>
 			<key>primary</key>

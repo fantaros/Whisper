@@ -6,16 +6,16 @@
 //  Copyright © 2016年 fantaros. All rights reserved.
 //
 
-#import "WSPWhisperAlogrithm.h"
+#import "WSPWhisperAlgorithm.h"
 #import "WSPWhisperBlock4.h"
 
-@interface WSPWhisperAlogrithm ()
+@interface WSPWhisperAlgorithm ()
 
 @property (strong, nonatomic) WSPWhisperBlock4 *block;
 
 @end
 
-@implementation WSPWhisperAlogrithm
+@implementation WSPWhisperAlgorithm
 
 - (WSPWhisperData *) encrypto:(WSPWhisperData *)baseData key:(WSPWhisperKey *) password {
     NSArray *org = baseData.byteArray;
