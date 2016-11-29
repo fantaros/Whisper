@@ -21,17 +21,20 @@ public class WhisperBlock {
 
 
     public WhisperBlock() {
-        //valuearray = new byte[]{
-        //    0,0,0,0
-        //};
+        valuearray = new byte[]{
+            0,0,0,0
+        };
+        logix = new Logix();
     }
 
-    public void SetValue(byte[] input, int offset) {
+    public void setValue(byte[] input, int offset) {
         for (int i = 0; i < 4; i++) {
-            if (offset + i < input.length)
-                valuearray[i] = input[offset + i];
-            else
-                valuearray[i] = 0;
+            if (offset + i < input.length) {
+            	valuearray[i] = input[offset + i];
+            }
+            else {
+            	valuearray[i] = 0;
+            }
         }
     }
 
@@ -43,19 +46,9 @@ public class WhisperBlock {
         valuearray[3] = a3;
     }
 
-    public WhisperBlock(byte[] a, int offset) {
-        valuearray = new byte[4];
-        for (int i = 0; i < 4; i++) {
-            if (offset + i < a.length)
-                valuearray[i] = a[offset + i];
-            else
-                valuearray[i] = 0;
-        }
-    }
-
     private byte[] newarray;
 
-    public void BlockSwap(byte swaper) {
+    public void blockSwap(byte swaper) {
         newarray = new byte[4];
         newarray[0] = valuearray[(byte) ((swaper & 0xc0) >>> 6)];
         newarray[1] = valuearray[(byte) ((swaper & 0x30) >>> 4)];
@@ -64,7 +57,7 @@ public class WhisperBlock {
         valuearray = newarray;
     }
 
-    public void DeBlockSwap(byte swaper) {
+    public void deBlockSwap(byte swaper) {
         newarray = new byte[4];
         newarray[(byte) ((swaper & 0xc0) >>> 6)] = valuearray[0];
         newarray[(byte) ((swaper & 0x30) >>> 4)] = valuearray[1];
@@ -73,13 +66,13 @@ public class WhisperBlock {
         valuearray = newarray;
     }
 
-    private void swap(int f, int t) {
-        valuearray[f] = (byte) (valuearray[f] ^ valuearray[t]);
-        valuearray[t] = (byte) (valuearray[f] ^ valuearray[t]);
-        valuearray[f] = (byte) (valuearray[f] ^ valuearray[t]);
-    }
+//    private void swap(int f, int t) {
+//        valuearray[f] = (byte) (valuearray[f] ^ valuearray[t]);
+//        valuearray[t] = (byte) (valuearray[f] ^ valuearray[t]);
+//        valuearray[f] = (byte) (valuearray[f] ^ valuearray[t]);
+//    }
 
-    public void Accept(byte[] output, int offset) {
+    public void accept(byte[] output, int offset) {
         for (int i = 0; i < 4; i++) {
             if (offset + i < output.length) {
                 output[offset + i] = valuearray[i];
@@ -87,11 +80,11 @@ public class WhisperBlock {
         }
     }
 
-    public void Whisping(int offset, byte function, byte keys) {
-        valuearray[offset] = logix.logix(valuearray[offset], keys, function);
+    public void whisping(int offset, byte function, byte keys) {
+        valuearray[offset] = logix.logix(valuearray[offset], function, keys);
     }
 
-    public String ToString() {
+    public String toString() {
         StringBuilder ret = new StringBuilder();
         for (byte num : valuearray) {
             ret.append(num);

@@ -28,14 +28,22 @@ public class Logix {
     }
 
     private int seek(int offset, int seed) {
-        return (byte)((28403 + (seed ^ (offset * 997 + 15541)) * 59) % 256);
+        return unsignedByte((byte)((28403 + (seed ^ (offset * 997 + 15541)) * 59) % 256));
     }
 
     public byte mappedLogixTableH(int src) {
-        return logixTable[(byte)src & 31];
+        return logixTable[src & 31];
     }
 
     public byte logix (byte op1, byte op2, byte s) {
-        return (byte)(op1 ^ op2 ^ mappedLogixTableH(s));
+        return (byte)(op1 ^ op2 ^ mappedLogixTableH(unsignedByte(s)));
     }
+    
+    private int unsignedByte(byte data) {
+		if (data >= 0) {
+			return data;
+		} else {
+			return 256 + data;
+		}
+	}
 }
