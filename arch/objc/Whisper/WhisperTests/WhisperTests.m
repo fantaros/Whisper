@@ -40,6 +40,9 @@
         WSPWhisperKey *key = [WSPWhisperKey whisperKeyWithPassword:@"fantasy88" keyLength:128];
         WSPWhisperData *outputData = [algorithm encrypto:inputData key:key];
         NSLog(@"outputData = %@", [outputData base64String]);
+        WSPWhisperData *deinput = [WSPWhisperData whisperDataWithData: [outputData data]];
+        WSPWhisperData *deoutput = [algorithm decrypto:deinput key:key];
+        NSLog(@"deoutputData = %@",[[NSString alloc] initWithData:[deoutput data] encoding:NSUTF8StringEncoding]);
     }
 }
 

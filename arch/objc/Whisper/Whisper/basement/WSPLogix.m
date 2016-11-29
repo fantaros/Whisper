@@ -19,8 +19,9 @@
 -(instancetype) init {
     self = [super init];
     if (self) {
-        NSDate *now = [[NSDate alloc] init];
-        NSInteger seed = (NSInteger)((NSInteger)[now timeIntervalSince1970] % 65536);
+//        NSDate *now = [[NSDate alloc] init];
+//        NSInteger seed = (NSInteger)((NSInteger)[now timeIntervalSince1970] % 65536);
+        NSInteger seed = 198848;
         [self setupSelfWithSeed: seed];
     }
     return self;
