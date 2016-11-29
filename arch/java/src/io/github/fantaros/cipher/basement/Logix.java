@@ -7,7 +7,7 @@ public class Logix {
     private int[] logixTable;
 
     public Logix() {
-        init(199848);
+        init(198848);
         System.out.println("logix");
     }
 
