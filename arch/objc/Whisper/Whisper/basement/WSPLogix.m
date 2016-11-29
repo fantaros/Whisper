@@ -34,7 +34,7 @@
     return self;
 }
 
--(unsigned char) cookOffset:(NSUInteger) offset withSeed:(unsigned char) seed {
+-(unsigned char) cookOffset:(NSUInteger) offset withSeed:(NSInteger) seed {
     // 0x03E5 = 997
     // 0x3CB5 = 15541
     // 0x6EF3 = 28403
@@ -63,7 +63,7 @@
 }
 
 -(unsigned char) logixWithOperatorByte1:(unsigned char) opt1 operatorByte2:(unsigned char) opt2 methodType:(unsigned char) methodNo {
-    return (unsigned char)(opt1 ^ opt2 ^ [self mappedLogixTableH:methodNo]);
+    return (unsigned char)(((NSInteger)opt1) ^ ((NSInteger)opt2) ^ ((NSInteger)[self mappedLogixTableH:methodNo]));
 }
 
 @end

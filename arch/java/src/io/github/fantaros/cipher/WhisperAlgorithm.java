@@ -1,8 +1,5 @@
 package io.github.fantaros.cipher;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.github.fantaros.cipher.basement.WhisperBlock;
 import io.github.fantaros.cipher.data.WhisperKey;
 
@@ -22,7 +19,7 @@ public class WhisperAlgorithm {
 	            block.blockSwap(ring);
 	            for (j = 0; j < 4; ++j) {
 	            	key = password.getKey(i + j);
-	            	block.whisping(j, password.getKey(key), key);
+	            	block.whisping(j, key, password.getKey(key));
 	            }
 	            block.accept(oData, i);
 	        }

@@ -82,10 +82,9 @@ public class WhisperKey {
 	}
 
 	private void setupRing (){
-		int i,j;
+		int i;
 		List<Byte> mutableRing = new ArrayList<Byte>();
 	    for (i = 0; i < this.whisperStoredKey.length - 1; i += 2) {
-	        j = i / 2;
 	        byte res = (byte)WhisperSwapMagic[reget((int)(this.whisperStoredKey[i % 128]), (int)(this.whisperStoredKey[(i + 1) % 128])) % 24];
 	        mutableRing.add(res);
 	    }
