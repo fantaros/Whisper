@@ -21,8 +21,7 @@
     if (self) {
 //        NSDate *now = [[NSDate alloc] init];
 //        NSInteger seed = (NSInteger)((NSInteger)[now timeIntervalSince1970] % 65536);
-        NSInteger seed = 198848;
-        [self setupSelfWithSeed: seed];
+        [self setupSelfWithSeed: 198848];
     }
     return self;
 }
