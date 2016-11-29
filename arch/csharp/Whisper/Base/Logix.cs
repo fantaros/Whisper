@@ -21,7 +21,7 @@ namespace io.github.fantaros.Whisper.Base
 
         public Logix()
         {
-            init(0);
+            init(198848);
         }
 
         public Logix(int seed)
