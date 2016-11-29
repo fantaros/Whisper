@@ -39,7 +39,7 @@
     if (inputData != nil) {        
         WSPWhisperKey *key = [WSPWhisperKey whisperKeyWithPassword:@"fantasy88" keyLength:128];
         WSPWhisperData *outputData = [algorithm encrypto:inputData key:key];
-        NSLog(@"outputData = %@", outputData.byteArray);
+        NSLog(@"outputData = %@", [outputData base64String]);
     }
 }
 

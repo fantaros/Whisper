@@ -32,4 +32,7 @@
 
 - (unsigned char) unsignedCharValueAtIndex:(NSUInteger) offset;
 
+- (NSData *) data;
+- (NSString *) base64String;
+
 @end

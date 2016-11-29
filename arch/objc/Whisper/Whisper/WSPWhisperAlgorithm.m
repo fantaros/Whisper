@@ -26,7 +26,7 @@
     if (org != nil) {
         NSInteger len = org.count;
         NSInteger olen = (NSInteger)((len / 4.0) + 0.9) * 4;
-        WSPWhisperData *oData = [WSPWhisperData whisperDataWithCapacity:olen];
+        WSPWhisperData *oData = [WSPWhisperData whisperDataWithCapacity: olen];
         self.block = [WSPWhisperBlock4 whisperBlock4];
         NSInteger j;
         for (NSInteger i = 0; i < org.count; i += 4) {

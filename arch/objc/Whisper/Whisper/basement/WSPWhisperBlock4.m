@@ -27,11 +27,11 @@
     return [[WSPWhisperBlock4 alloc] initWithByte0:byte0 byte1:byte1 byte2:byte2 byte3:byte3];
 }
 
-+ (instancetype) whisperBlock4WithByteArray:(NSArray<NSNumber *> *) byteArray {
++ (instancetype) whisperBlock4WithByteArray:(NSArray *) byteArray {
     return [[WSPWhisperBlock4 alloc] initWithByteArray:byteArray];
 }
 
-+ (instancetype) whisperBlock4WithBigByteArray:(NSArray<NSNumber *> *) bigArray offset:(NSUInteger) offset {
++ (instancetype) whisperBlock4WithBigByteArray:(NSArray *) bigArray offset:(NSUInteger) offset {
     return [[WSPWhisperBlock4 alloc] initWithBigByteArray:bigArray offset:offset];
 }
 
@@ -65,7 +65,7 @@
     return self;
 }
 
-- (instancetype) initWithByteArray:(NSArray<NSNumber *> *)byteArray {
+- (instancetype) initWithByteArray:(NSArray *)byteArray {
     self = [super init];
     if (self) {
         [self refreshDataWithByteArray:byteArray];
@@ -73,7 +73,7 @@
     return self;
 }
 
-- (instancetype) initWithBigByteArray:(NSArray<NSNumber *> *)bigArray offset:(NSUInteger)offset {
+- (instancetype) initWithBigByteArray:(NSArray *)bigArray offset:(NSUInteger)offset {
     self = [super init];
     if (self) {
         [self refreshDataWithBigByteArray:bigArray offset:offset];
@@ -81,31 +81,40 @@
     return self;
 }
 
-- (void) refreshDataWithByteArray:(NSArray<NSNumber *> *) array {
+- (void) refreshDataWithByteArray:(NSArray *) array {
     [self.bytes removeAllObjects];
     for (NSInteger i = 0; i < WHISPER_BLOCKSIZE; ++i) {
         if (i < array.count) {
-            [self.bytes addObject:array[i]];
+            NSNumber *tmp = [array[i] copy];
+            [self.bytes addObject: tmp];
         }
     }
 }
 
-- (void) refreshDataWithBigByteArray:(NSArray<NSNumber *> *) bigArray offset:(NSUInteger) offset{
+- (void) refreshDataWithBigByteArray:(NSArray *) bigArray offset:(NSUInteger) offset{
     [self.bytes removeAllObjects];
     for (NSInteger i = 0; i < WHISPER_BLOCKSIZE; ++i) {
         if (i < 4) {
-            [self.bytes addObject:bigArray[offset + i]];
+            if ((offset + i) < bigArray.count) {
+                NSNumber *tmp = [bigArray[(offset + i)] copy];
+                [self.bytes addObject: tmp];
+            } else {
+                [self.bytes addObject:[NSNumber numberWithUnsignedChar:0]];
+            }
         }
     }
 }
 
 - (void) blockSwap:(unsigned char) swaper {
     NSMutableArray *newarray = [[NSMutableArray alloc] initWithCapacity: WHISPER_BLOCKSIZE];
-    [newarray addObject: self.bytes[(unsigned char)((swaper & 0xc0) >> 6)]];
-    [newarray addObject: self.bytes[(unsigned char)((swaper & 0x30) >> 4)]];
-    [newarray addObject: self.bytes[(unsigned char)((swaper & 0x0c) >> 2)]];
-    [newarray addObject: self.bytes[swaper & 0x03]];
-    _bytes = [newarray copy];
+    [newarray addObject: [self.bytes[(unsigned char)((swaper & 0xc0) >> 6)] copy]];
+    [newarray addObject: [self.bytes[(unsigned char)((swaper & 0x30) >> 4)] copy]];
+    [newarray addObject: [self.bytes[(unsigned char)((swaper & 0x0c) >> 2)] copy]];
+    [newarray addObject: [self.bytes[swaper & 0x03] copy]];
+    [self.bytes removeAllObjects];
+    for (NSInteger i = 0; i < newarray.count; ++i) {
+        [self.bytes addObject: [newarray[i] copy]];
+    }
 }
 
 - (void) deBlockSwap:(unsigned char) swaper {
@@ -113,11 +122,14 @@
     for (NSInteger i = 0; i < WHISPER_BLOCKSIZE; ++i) {
         [newarray addObject:[NSNumber numberWithInteger: i]];
     }
-    newarray[(unsigned char)((swaper & 0xc0) >> 6)] = self.bytes[0];
-    newarray[(unsigned char)((swaper & 0x30) >> 4)] = self.bytes[1];
-    newarray[(unsigned char)((swaper & 0x0c) >> 2)] = self.bytes[2];
-    newarray[(unsigned char)(swaper & 0x03)] = self.bytes[3];
-    self.bytes = [newarray copy];
+    newarray[(unsigned char)((swaper & 0xc0) >> 6)] = [self.bytes[0] copy];
+    newarray[(unsigned char)((swaper & 0x30) >> 4)] = [self.bytes[1] copy];
+    newarray[(unsigned char)((swaper & 0x0c) >> 2)] = [self.bytes[2] copy];
+    newarray[(unsigned char)(swaper & 0x03)] = [self.bytes[3] copy];
+    [self.bytes removeAllObjects];
+    for (NSInteger i = 0; i < newarray.count; ++i) {
+        [self.bytes addObject: [newarray[i] copy]];
+    }
 }
 
 - (void) swapFrom:(NSInteger) from to:(NSInteger) to {
@@ -130,7 +142,7 @@
     NSMutableArray *newOutput = [output mutableCopy];
     for (int i = 0; i < WHISPER_BLOCKSIZE; i++) {
         if (offset + i < output.count) {
-            [newOutput insertObject:_bytes[i] atIndex:offset + i];
+            [newOutput insertObject:self.bytes[i] atIndex:offset + i];
         }
     }
     return [newOutput copy];
@@ -139,8 +151,7 @@
 - (void) whispingWithOffset:(NSInteger) offset function:(unsigned char) function keys:(unsigned char) keys {
     unsigned char opt1 = [[self.bytes objectAtIndex:offset] unsignedCharValue];
     unsigned char result = [self.logix logixWithOperatorByte1:opt1 operatorByte2:keys methodType: function];
-    NSNumber *number = [self.bytes objectAtIndex:offset];
-    [self.bytes setObject:[NSNumber numberWithUnsignedChar: result] atIndexedSubscript:offset];
+    self.bytes[offset] = [NSNumber numberWithUnsignedChar:result];
 }
 
 @end

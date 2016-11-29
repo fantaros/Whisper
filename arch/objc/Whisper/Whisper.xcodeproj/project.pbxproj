@@ -14,6 +14,8 @@
 		890A1F4F1DEC43290002D528 /* WSPWhisperAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F4A1DEC43290002D528 /* WSPWhisperAlgorithm.m */; };
 		890A1F571DEC43ED0002D528 /* WhisperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F561DEC43ED0002D528 /* WhisperTests.m */; };
 		890A1F591DEC43ED0002D528 /* libWhisper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89F498391DDD873F007B734F /* libWhisper.a */; };
+		8968CC151DED272C00EF7F41 /* NSData+WSPBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 8968CC141DED272C00EF7F41 /* NSData+WSPBase64.m */; };
+		8968CC181DED28BA00EF7F41 /* NSString+WSPBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 8968CC171DED28BA00EF7F41 /* NSString+WSPBase64.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,10 @@
 		890A1F541DEC43ED0002D528 /* WhisperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhisperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		890A1F561DEC43ED0002D528 /* WhisperTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WhisperTests.m; sourceTree = "<group>"; };
 		890A1F581DEC43ED0002D528 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8968CC131DED272C00EF7F41 /* NSData+WSPBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+WSPBase64.h"; sourceTree = "<group>"; };
+		8968CC141DED272C00EF7F41 /* NSData+WSPBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+WSPBase64.m"; sourceTree = "<group>"; };
+		8968CC161DED28BA00EF7F41 /* NSString+WSPBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+WSPBase64.h"; sourceTree = "<group>"; };
+		8968CC171DED28BA00EF7F41 /* NSString+WSPBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+WSPBase64.m"; sourceTree = "<group>"; };
 		89F498391DDD873F007B734F /* libWhisper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWhisper.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -81,6 +87,10 @@
 				890A1F411DEC43290002D528 /* WSPLogix.m */,
 				890A1F421DEC43290002D528 /* WSPWhisperBlock4.h */,
 				890A1F431DEC43290002D528 /* WSPWhisperBlock4.m */,
+				8968CC131DED272C00EF7F41 /* NSData+WSPBase64.h */,
+				8968CC141DED272C00EF7F41 /* NSData+WSPBase64.m */,
+				8968CC161DED28BA00EF7F41 /* NSString+WSPBase64.h */,
+				8968CC171DED28BA00EF7F41 /* NSString+WSPBase64.m */,
 			);
 			path = basement;
 			sourceTree = "<group>";
@@ -236,8 +246,10 @@
 			files = (
 				890A1F4D1DEC43290002D528 /* WSPWhisperData.m in Sources */,
 				890A1F4C1DEC43290002D528 /* WSPWhisperBlock4.m in Sources */,
+				8968CC181DED28BA00EF7F41 /* NSString+WSPBase64.m in Sources */,
 				890A1F4B1DEC43290002D528 /* WSPLogix.m in Sources */,
 				890A1F4F1DEC43290002D528 /* WSPWhisperAlgorithm.m in Sources */,
+				8968CC151DED272C00EF7F41 /* NSData+WSPBase64.m in Sources */,
 				890A1F4E1DEC43290002D528 /* WSPWhisperKey.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -397,6 +409,7 @@
 				890A1F5E1DEC43ED0002D528 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		89F498341DDD873E007B734F /* Build configuration list for PBXProject "Whisper" */ = {
 			isa = XCConfigurationList;

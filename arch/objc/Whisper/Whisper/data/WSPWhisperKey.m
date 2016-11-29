@@ -118,10 +118,10 @@
         j = i / 2;
         [mutableRing addObject:
             [NSNumber numberWithUnsignedChar:(
-             (unsigned char) (self.WhisperSwapMagic[
-                                                    [self regetByte1:[self.whisperStoredKey[i%self.keyLength] unsignedCharValue]
+             (unsigned char) ([self.WhisperSwapMagic[
+                                                    [self regetByte1:[self.whisperStoredKey[i % self.keyLength] unsignedCharValue]
                                                                byte2:[self.whisperStoredKey[(i + 1)%self.keyLength] unsignedCharValue]]
-                                                    % 24])
+                                                    % 24] unsignedCharValue])
              )] ];
     }
     self.whisperStoredRing = [mutableRing copy];
