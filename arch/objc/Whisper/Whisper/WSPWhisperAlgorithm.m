@@ -17,6 +17,10 @@
 
 @implementation WSPWhisperAlgorithm
 
++ (instancetype) whisperAlgorithm {
+    return [[WSPWhisperAlgorithm alloc] init];
+}
+
 - (WSPWhisperData *) encrypto:(WSPWhisperData *)baseData key:(WSPWhisperKey *) password {
     NSArray *org = baseData.byteArray;
     if (org != nil) {

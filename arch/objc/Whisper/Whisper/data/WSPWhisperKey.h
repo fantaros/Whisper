@@ -10,6 +10,7 @@
 
 @interface WSPWhisperKey : NSObject
 
++ (instancetype) whisperKeyWithPassword: (NSString *) password;
 + (instancetype) whisperKeyWithPassword: (NSString *) password keyLength:(NSUInteger) keyLength;
 
 @property (copy, nonatomic) NSArray *WhisperTable;

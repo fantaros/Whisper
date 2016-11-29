@@ -7,6 +7,8 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "WSPWhisperAlgorithm.h"
+#import "WSPWhisperData.h"
 
 @interface WhisperTests : XCTestCase
 
@@ -24,9 +26,21 @@
     [super tearDown];
 }
 
-- (void)testWhisperAlo {
+- (void)testWhisperAlgorithm {
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
+    WSPWhisperAlgorithm *algorithm = [WSPWhisperAlgorithm whisperAlgorithm];
+    NSString *dataString = @"这是一段要被加密的测试代码呢。";
+    NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+    WSPWhisperData *inputData = nil;
+    if (data != nil) {
+        inputData = [WSPWhisperData whisperDataWithData:data];
+    }
+    if (inputData != nil) {        
+        WSPWhisperKey *key = [WSPWhisperKey whisperKeyWithPassword:@"fantasy88" keyLength:128];
+        WSPWhisperData *outputData = [algorithm encrypto:inputData key:key];
+        NSLog(@"outputData = %@", outputData.byteArray);
+    }
 }
 
 - (void)testPerformanceExample {

@@ -11,6 +11,7 @@
 @interface WSPWhisperData : NSObject
 
 + (instancetype) whisperData;
++ (instancetype) whisperDataWithData:(NSData *)data;
 + (instancetype) whisperDataWithCapacity:(NSUInteger) capacity;
 + (instancetype) whisperDataWithUnsignedCharArray:(NSArray *)array;
 

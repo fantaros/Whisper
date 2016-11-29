@@ -12,6 +12,8 @@
 
 @interface WSPWhisperAlgorithm : NSObject
 
++ (instancetype) whisperAlgorithm;
+
 - (WSPWhisperData *) encrypto:(WSPWhisperData *)baseData key:(WSPWhisperKey *) password;
 
 - (WSPWhisperData *) decrypto:(WSPWhisperData *)baseData key:(WSPWhisperKey *) password;

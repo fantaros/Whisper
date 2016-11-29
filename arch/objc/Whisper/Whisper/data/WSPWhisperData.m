@@ -22,6 +22,10 @@
     return [[WSPWhisperData alloc] init];
 }
 
++ (instancetype) whisperDataWithData:(NSData *)data {
+    return [[WSPWhisperData alloc] initWithData:data];
+}
+
 + (instancetype) whisperDataWithCapacity:(NSUInteger) capacity {
     return [[WSPWhisperData alloc] init];
 }
@@ -47,6 +51,21 @@
     self = [super init];
     if (self){
         _byteArray = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
+- (instancetype) initWithData:(NSData *)data {
+    self = [super init];
+    if (self){
+        _byteArray = [[NSMutableArray alloc] init];
+        if (data != nil) {
+            unsigned char tmpData[data.length];
+            [data getBytes:tmpData length:data.length];
+            for (NSInteger i = 0; i < data.length; ++i) {
+                [_byteArray addObject:[NSNumber numberWithUnsignedChar:tmpData[i]]];
+            }
+        }
     }
     return self;
 }

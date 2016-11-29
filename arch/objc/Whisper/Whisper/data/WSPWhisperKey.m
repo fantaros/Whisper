@@ -20,12 +20,16 @@
 
 @implementation WSPWhisperKey
 
++ (instancetype) whisperKeyWithPassword:(NSString *)password {
+    return [[WSPWhisperKey alloc] initWithPassword:password keyLength:128];
+}
+
 + (instancetype) whisperKeyWithPassword: (NSString *) password keyLength:(NSUInteger) keyLength {
     return [[WSPWhisperKey alloc] initWithPassword:password keyLength:keyLength];
 }
 
 - (NSArray *) WhisperTable {
-    return @[
+    _WhisperTable = @[
              @0xd6, @0x9c, @0x2b, @0xd7, @0xbd, @0x66,
              @0xb5, @0xf9, @0x27, @0xb7, @0x02, @0x86,
              @0x68, @0x79, @0xa3, @0xfe, @0x0f, @0x78,
@@ -38,15 +42,17 @@
              @0x71, @0x23, @0x38, @0x6f, @0xcb, @0x63,
              @0x6c, @0xf1, @0x40, @0x8
              ];
+    return _WhisperTable;
 }
 
 - (NSArray *) WhisperSwapMagic {
-    return @[
+    _WhisperSwapMagic = @[
              @27,@30,@39,@45,@54,@57,
              @75,@78,@99,@108,@114,@120,
              @135,@141,@147,@156,@177,@180,
              @198,@201,@210,@216,@225,@22
              ];
+    return _WhisperSwapMagic;
 }
 
 - (NSArray *) whisperStoredKey {
@@ -73,7 +79,7 @@
 
 - (void) setupKey {
     if (self.password.length < 1) {
-        self.password = @"123456";
+        self.password = @"1234567890";
     }
     NSData *passwordData = [self.password dataUsingEncoding:NSUTF8StringEncoding];
     NSInteger len = passwordData.length;
@@ -118,6 +124,7 @@
                                                     % 24])
              )] ];
     }
+    self.whisperStoredRing = [mutableRing copy];
 }
 
 - (unsigned char) regetByte1:(unsigned char) byte1 byte2:(unsigned char) byte2 {

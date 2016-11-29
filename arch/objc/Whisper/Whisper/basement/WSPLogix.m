@@ -10,7 +10,7 @@
 
 @interface WSPLogix()
 
-@property (nonatomic, assign) NSArray<NSNumber *> *logixTable;
+@property (copy, nonatomic) NSArray *logixTable;
 
 @end
 
@@ -45,7 +45,7 @@
 }
 
 -(void) setupSelfWithSeed:(NSInteger) seed {
-    NSMutableArray<NSNumber *> *seedArray = [[NSMutableArray alloc] initWithCapacity:256];
+    NSMutableArray *seedArray = [[NSMutableArray alloc] initWithCapacity:256];
     NSUInteger i;
     for (i = 0; i < 256; ++i) {
         [seedArray addObject: [NSNumber numberWithUnsignedChar:i]];
@@ -55,10 +55,11 @@
         seedArray[[self cookOffset:i withSeed:seed]] = [NSNumber numberWithUnsignedChar:(unsigned char)([seedArray[[self cookOffset:i withSeed:seed]] unsignedCharValue] ^ [seedArray[i] unsignedCharValue])];
         seedArray[i] = [NSNumber numberWithUnsignedChar:(unsigned char)([seedArray[[self cookOffset:i withSeed:seed]] unsignedCharValue] ^ [seedArray[i] unsignedCharValue])];
     }
+    _logixTable = seedArray;
 }
 
 -(unsigned char) mappedLogixTableH:(unsigned char) src {
-    return [_logixTable[src & 31] unsignedCharValue];
+    return [[_logixTable objectAtIndex:((NSInteger)(src & 31))] unsignedCharValue];
 }
 
 -(unsigned char) logixWithOperatorByte1:(unsigned char) opt1 operatorByte2:(unsigned char) opt2 methodType:(unsigned char) methodNo {
