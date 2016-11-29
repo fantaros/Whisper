@@ -1,0 +1,4 @@
+//whisper - fantaros
+(function (){
+	
+})();
