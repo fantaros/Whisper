@@ -1,4 +1,4 @@
-package io.github.fantaros.cipher.whisper;
+package io.github.fantaros.cipher.basement;
 
 /**
  * Created by fantaros on 2014/5/24.
@@ -7,14 +7,14 @@ public class Logix {
     private byte[] logixTable;
 
     public Logix() {
-        init(0);
+        init(199848);
     }
 
     public Logix(int seed) {
         init(seed);
     }
 
-    public void init (int seed){
+    public void init (int seed) {
         logixTable = new byte[256];
         int i;
         for (i = 0; i < 256; ++i) {

@@ -1,21 +1,22 @@
-package io.github.fantaros.cipher.whisper;
+package io.github.fantaros.cipher.basement;
 
 public class WhisperBlock {
     private Logix logix;
     private byte[] valuearray;
 
-    public byte get(int offset) throws WhisperException {
-        if (offset < 4)
-            return valuearray[offset];
-        else
-            throw new WhisperException("offset(offset is too big)");
+    public byte get(int offset) throws IllegalArgumentException {
+        if (offset < 4) {
+        	return valuearray[offset];
+        } else {
+        	throw new IllegalArgumentException("block get offset > 4");
+        }
     }
 
-    public void set(int offset, byte value) throws WhisperException {
+    public void set(int offset, byte value) throws IllegalArgumentException {
         if (offset < 4)
             valuearray[offset] = value;
         else
-            throw new WhisperException("offset(offset is too big)");
+            throw new IllegalArgumentException("block set offset > 4");
     }
 
 
