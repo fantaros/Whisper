@@ -30,7 +30,8 @@
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
     WSPWhisperAlgorithm *algorithm = [WSPWhisperAlgorithm whisperAlgorithm];
-    NSString *dataString = @"这是一段要被加密的测试代码呢。";
+//    NSString *dataString = @"这是一段要被加密的测试代码呢。";
+    NSString *dataString = @"";
     NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
     WSPWhisperData *inputData = nil;
     if (data != nil) {
