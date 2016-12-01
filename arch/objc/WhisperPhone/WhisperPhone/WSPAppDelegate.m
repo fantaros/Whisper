@@ -6,13 +6,13 @@
 //  Copyright © 2016年 fantaros. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "WSPAppDelegate.h"
 
-@interface AppDelegate ()
+@interface WSPAppDelegate ()
 
 @end
 
-@implementation AppDelegate
+@implementation WSPAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {

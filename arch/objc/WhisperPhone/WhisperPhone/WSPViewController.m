@@ -6,10 +6,10 @@
 //  Copyright © 2016年 fantaros. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "WSPViewController.h"
 #import "WSPWhisperAlgorithm.h"
 
-@interface ViewController ()
+@interface WSPViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *msgText;
 @property (weak, nonatomic) IBOutlet UITextField *pwdText;
@@ -18,7 +18,7 @@
 
 @end
 
-@implementation ViewController
+@implementation WSPViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,5 +42,10 @@
         self.resultView.text = [outputData base64String];
     }
 }
+
+- (IBAction)deButtonClick:(UIButton *)sender {
+    
+}
+
 
 @end

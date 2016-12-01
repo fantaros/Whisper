@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		89225D801DEA811C002B71DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 89225D7F1DEA811C002B71DF /* main.m */; };
-		89225D831DEA811C002B71DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 89225D821DEA811C002B71DF /* AppDelegate.m */; };
-		89225D861DEA811C002B71DF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89225D851DEA811C002B71DF /* ViewController.m */; };
+		89225D831DEA811C002B71DF /* WSPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 89225D821DEA811C002B71DF /* WSPAppDelegate.m */; };
+		89225D861DEA811C002B71DF /* WSPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89225D851DEA811C002B71DF /* WSPViewController.m */; };
 		89225D891DEA811C002B71DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89225D871DEA811C002B71DF /* Main.storyboard */; };
 		89225D8C1DEA811C002B71DF /* WhisperPhone.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 89225D8A1DEA811C002B71DF /* WhisperPhone.xcdatamodeld */; };
 		89225D8E1DEA811C002B71DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89225D8D1DEA811C002B71DF /* Assets.xcassets */; };
@@ -18,12 +18,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		89225D7B1DEA811C002B71DF /* WhisperPhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhisperPhone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		89225D7B1DEA811C002B71DF /* Whisper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Whisper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89225D7F1DEA811C002B71DF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		89225D811DEA811C002B71DF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		89225D821DEA811C002B71DF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		89225D841DEA811C002B71DF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		89225D851DEA811C002B71DF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		89225D811DEA811C002B71DF /* WSPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WSPAppDelegate.h; sourceTree = "<group>"; };
+		89225D821DEA811C002B71DF /* WSPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WSPAppDelegate.m; sourceTree = "<group>"; };
+		89225D841DEA811C002B71DF /* WSPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WSPViewController.h; sourceTree = "<group>"; };
+		89225D851DEA811C002B71DF /* WSPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WSPViewController.m; sourceTree = "<group>"; };
 		89225D881DEA811C002B71DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		89225D8B1DEA811C002B71DF /* WhisperPhone.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WhisperPhone.xcdatamodel; sourceTree = "<group>"; };
 		89225D8D1DEA811C002B71DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -59,7 +59,7 @@
 		89225D7C1DEA811C002B71DF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				89225D7B1DEA811C002B71DF /* WhisperPhone.app */,
+				89225D7B1DEA811C002B71DF /* Whisper.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,10 +70,10 @@
 				8969093D1DEFD971007DDB16 /* WSPWhisperData.h */,
 				8969093E1DEFD971007DDB16 /* WSPWhisperKey.h */,
 				8969093C1DEFD961007DDB16 /* WSPWhisperAlgorithm.h */,
-				89225D811DEA811C002B71DF /* AppDelegate.h */,
-				89225D821DEA811C002B71DF /* AppDelegate.m */,
-				89225D841DEA811C002B71DF /* ViewController.h */,
-				89225D851DEA811C002B71DF /* ViewController.m */,
+				89225D811DEA811C002B71DF /* WSPAppDelegate.h */,
+				89225D821DEA811C002B71DF /* WSPAppDelegate.m */,
+				89225D841DEA811C002B71DF /* WSPViewController.h */,
+				89225D851DEA811C002B71DF /* WSPViewController.m */,
 				89225D871DEA811C002B71DF /* Main.storyboard */,
 				89225D8D1DEA811C002B71DF /* Assets.xcassets */,
 				89225D8F1DEA811C002B71DF /* LaunchScreen.storyboard */,
@@ -103,9 +103,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		89225D7A1DEA811C002B71DF /* WhisperPhone */ = {
+		89225D7A1DEA811C002B71DF /* Whisper */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 89225D951DEA811C002B71DF /* Build configuration list for PBXNativeTarget "WhisperPhone" */;
+			buildConfigurationList = 89225D951DEA811C002B71DF /* Build configuration list for PBXNativeTarget "Whisper" */;
 			buildPhases = (
 				89225D771DEA811C002B71DF /* Sources */,
 				89225D781DEA811C002B71DF /* Frameworks */,
@@ -115,9 +115,9 @@
 			);
 			dependencies = (
 			);
-			name = WhisperPhone;
+			name = Whisper;
 			productName = WhisperPhone;
-			productReference = 89225D7B1DEA811C002B71DF /* WhisperPhone.app */;
+			productReference = 89225D7B1DEA811C002B71DF /* Whisper.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -149,7 +149,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				89225D7A1DEA811C002B71DF /* WhisperPhone */,
+				89225D7A1DEA811C002B71DF /* Whisper */,
 			);
 		};
 /* End PBXProject section */
@@ -172,9 +172,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89225D861DEA811C002B71DF /* ViewController.m in Sources */,
+				89225D861DEA811C002B71DF /* WSPViewController.m in Sources */,
 				89225D8C1DEA811C002B71DF /* WhisperPhone.xcdatamodeld in Sources */,
-				89225D831DEA811C002B71DF /* AppDelegate.m in Sources */,
+				89225D831DEA811C002B71DF /* WSPAppDelegate.m in Sources */,
 				89225D801DEA811C002B71DF /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,7 +325,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		89225D951DEA811C002B71DF /* Build configuration list for PBXNativeTarget "WhisperPhone" */ = {
+		89225D951DEA811C002B71DF /* Build configuration list for PBXNativeTarget "Whisper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				89225D961DEA811C002B71DF /* Debug */,
