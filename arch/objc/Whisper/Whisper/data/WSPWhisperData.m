@@ -16,6 +16,11 @@
 
 @implementation WSPWhisperData
 
++ (NSCharacterSet *) chiperAllowedCharsets {
+    return [NSCharacterSet characterSetWithCharactersInString:
+            @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"];
+}
+
 @synthesize byteArray = _byteArray;
 
 + (instancetype) whisperData {
@@ -157,7 +162,7 @@
     if (self.byteArray.count > 0) {
         NSData *data = [self data];
         if (data != nil) {
-            return [self base64EncodedStringWithData:data];
+            return [[self base64EncodedStringWithData:data] stringByAddingPercentEncodingWithAllowedCharacters:WSPWhisperData.chiperAllowedCharsets];
         }
     }
     return nil;

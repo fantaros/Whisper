@@ -15,6 +15,8 @@
 + (instancetype) whisperDataWithCapacity:(NSUInteger) capacity;
 + (instancetype) whisperDataWithUnsignedCharArray:(NSArray *)array;
 
+@property (strong, class, nonatomic, readonly) NSCharacterSet *chiperAllowedCharsets;
+
 - (NSMutableArray *) byteArray;
 - (void) setByteArray:(NSMutableArray *)byteArray;
 

@@ -5,7 +5,7 @@ import io.github.fantaros.cipher.data.WhisperKey;
 
 public class WhisperAlgorithm {
 	
-	byte[] encrypto(byte[] baseData, WhisperKey password) {
+	public static byte[] encrypto(byte[] baseData, WhisperKey password) {
 		if (baseData != null && password != null) {
 			int len = baseData.length;
 	        int olen = (int)((len / 4.0) + 0.9) * 4;
@@ -28,7 +28,7 @@ public class WhisperAlgorithm {
 		return null;
 	}
 	
-	byte[] decrypto(byte[] baseData, WhisperKey password) {
+	public static byte[] decrypto(byte[] baseData, WhisperKey password) {
 		if (baseData != null && password != null) {
 			int len = baseData.length;
 	        int olen = len;

@@ -14,6 +14,7 @@
 		89225D8C1DEA811C002B71DF /* WhisperPhone.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 89225D8A1DEA811C002B71DF /* WhisperPhone.xcdatamodeld */; };
 		89225D8E1DEA811C002B71DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89225D8D1DEA811C002B71DF /* Assets.xcassets */; };
 		89225D911DEA811C002B71DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89225D8F1DEA811C002B71DF /* LaunchScreen.storyboard */; };
+		8969093B1DEFD8E2007DDB16 /* libWhisper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8969093A1DEFD8E2007DDB16 /* libWhisper.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,10 @@
 		89225D8D1DEA811C002B71DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		89225D901DEA811C002B71DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89225D921DEA811C002B71DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8969093A1DEFD8E2007DDB16 /* libWhisper.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWhisper.a; path = "../../../../../../../Library/Developer/Xcode/DerivedData/Whisper-fzmpsputpfzbkwcldbvsmplxzjwq/Build/Products/Debug-iphonesimulator/libWhisper.a"; sourceTree = "<group>"; };
+		8969093C1DEFD961007DDB16 /* WSPWhisperAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WSPWhisperAlgorithm.h; path = ../../Whisper/Whisper/WSPWhisperAlgorithm.h; sourceTree = "<group>"; };
+		8969093D1DEFD971007DDB16 /* WSPWhisperData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WSPWhisperData.h; path = ../../Whisper/Whisper/data/WSPWhisperData.h; sourceTree = "<group>"; };
+		8969093E1DEFD971007DDB16 /* WSPWhisperKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WSPWhisperKey.h; path = ../../Whisper/Whisper/data/WSPWhisperKey.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8969093B1DEFD8E2007DDB16 /* libWhisper.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +52,7 @@
 			children = (
 				89225D7D1DEA811C002B71DF /* WhisperPhone */,
 				89225D7C1DEA811C002B71DF /* Products */,
+				896909391DEFD8E2007DDB16 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,6 +67,9 @@
 		89225D7D1DEA811C002B71DF /* WhisperPhone */ = {
 			isa = PBXGroup;
 			children = (
+				8969093D1DEFD971007DDB16 /* WSPWhisperData.h */,
+				8969093E1DEFD971007DDB16 /* WSPWhisperKey.h */,
+				8969093C1DEFD961007DDB16 /* WSPWhisperAlgorithm.h */,
 				89225D811DEA811C002B71DF /* AppDelegate.h */,
 				89225D821DEA811C002B71DF /* AppDelegate.m */,
 				89225D841DEA811C002B71DF /* ViewController.h */,
@@ -80,6 +90,14 @@
 				89225D7F1DEA811C002B71DF /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		896909391DEFD8E2007DDB16 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8969093A1DEFD8E2007DDB16 /* libWhisper.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -314,6 +332,7 @@
 				89225D971DEA811C002B71DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
