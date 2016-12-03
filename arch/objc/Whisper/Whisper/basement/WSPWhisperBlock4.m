@@ -148,7 +148,7 @@
     return [newOutput copy];
 }
 
-- (void) whispingWithOffset:(NSInteger) offset function:(unsigned char) function keys:(unsigned char) keys {
+- (void) whispingWithOffset:(NSInteger) offset keys:(unsigned char) keys function:(unsigned char) function  {
     unsigned char opt1 = [[self.bytes objectAtIndex:offset] unsignedCharValue];
     unsigned char result = [self.logix logixWithOperatorByte1:opt1 operatorByte2:keys methodType: function];
     self.bytes[offset] = [NSNumber numberWithUnsignedChar:result];

@@ -24,14 +24,14 @@ public class WhisperKey {
 			0xb4, 0x1e, 0xaf, 0x73, 0xb1, 0x07,
 			0x2d, 0x76, 0xc6, 0x9e, 0xa3, 0x6c,
 			0x71, 0x23, 0x38, 0x6f, 0xcb, 0x63,
-			0x6c, 0xf1, 0x40, 0x8
+			0x6c, 0xf1, 0x40, 0x82
 	};
 
 	private static final int[] WhisperSwapMagic = new int[] {
 			27,30,39,45,54,57,
 			75,78,99,108,114,120,
 			135,141,147,156,177,180,
-			198,201,210,216,225,22
+			198,201,210,216,225,228
 	};
 
 	private byte[] whisperStoredKey;
@@ -41,16 +41,32 @@ public class WhisperKey {
 
 	private WhisperKey (String password) {
 		this.password = password;
-		this.keyLength = 128;
+		this.keyLength = 163;
 		setupKey();
 		setupRing();
 	}
 
 	private WhisperKey (String password, int keyLength) {
 		this.password = password;
-		this.keyLength = (keyLength >= 128 ? keyLength : 128 );
+		this.keyLength = (keyLength >= 163 ? keyLength : 163 );
 		setupKey();
 		setupRing();
+	}
+
+	public void recook(long seed) {
+		if (this.whisperStoredKey != null) {
+			if (seed < 0) {
+				seed = Math.abs(seed);
+			}
+			seed = (long)unsignedByte( (int)(seed % 256) );
+			byte[] keys = new byte[this.whisperStoredKey.length];
+			for (int i = 0; i < this.whisperStoredKey.length; ++i) {
+				byte val = this.whisperStoredKey[i];
+				keys[i] = (byte) unsignedByte(((int) (val ^ seed)));
+			}
+			this.whisperStoredKey = keys;
+		}
+
 	}
 
 	private void setupKey (){
@@ -62,7 +78,7 @@ public class WhisperKey {
 		List<Byte> mutableKeys = new ArrayList<Byte>();
 		for (; i < this.keyLength; ++i) {
 			if (i < passwordData.length) {
-				byte res = (byte)(passwordData[i] ^ WhisperTable[unsignedByte(passwordData[i % passwordData.length]) % 64]);
+				byte res = (byte)(passwordData[i] ^ WhisperTable[unsignedByte(passwordData[i % passwordData.length]) % WhisperTable.length]);
 				mutableKeys.add(res);
 			} else {
 				byte res =  (byte)(
@@ -70,7 +86,7 @@ public class WhisperKey {
 								mutableKeys.get((i + 3) % passwordData.length) & 0x30 |
 								mutableKeys.get(i % passwordData.length) & 0x0c |
 								mutableKeys.get((i + 2) % passwordData.length) & 0x03) 
-						^ WhisperTable[unsignedByte(passwordData[i % passwordData.length]) % 64]);
+						^ WhisperTable[unsignedByte(passwordData[i % passwordData.length]) % WhisperTable.length]);
 				mutableKeys.add(res);
 			}
 		}
@@ -85,7 +101,7 @@ public class WhisperKey {
 		int i;
 		List<Byte> mutableRing = new ArrayList<Byte>();
 	    for (i = 0; i < this.whisperStoredKey.length - 1; i += 2) {
-	        byte res = (byte)WhisperSwapMagic[reget((int)(this.whisperStoredKey[i % 128]), (int)(this.whisperStoredKey[(i + 1) % 128])) % 24];
+	        byte res = (byte)WhisperSwapMagic[reget((int)(this.whisperStoredKey[i % this.keyLength]), (int)(this.whisperStoredKey[(i + 1) % this.keyLength])) % WhisperSwapMagic.length];
 	        mutableRing.add(res);
 	    }
 	    this.whisperStoredRing = new byte[mutableRing.size()];
@@ -100,7 +116,7 @@ public class WhisperKey {
 //         return ret;
 //     }
 	
-	private int unsignedByte(byte data) {
+	private int unsignedByte(int data) {
 		if (data >= 0) {
 			return data;
 		} else {
@@ -117,11 +133,11 @@ public class WhisperKey {
 	}
 
      public byte getKey(int offset) {
-         return this.whisperStoredKey[unsignedByteToInt(offset) % 128];
+         return this.whisperStoredKey[unsignedByteToInt(offset) % this.keyLength];
      }
 
      public byte getRing(int offset) {
-         return this.whisperStoredRing[unsignedByteToInt(offset) % 64];
+         return this.whisperStoredRing[unsignedByteToInt(offset) % this.whisperStoredRing.length];
      }
 
      public int reget(int a, int b) {

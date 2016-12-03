@@ -28,6 +28,6 @@
 - (void) deBlockSwap:(unsigned char) swaper;
 - (void) swapFrom:(NSInteger) from to:(NSInteger) to;
 - (NSArray *) acceptByteArray:(NSArray *) output offset:(NSInteger) offset;
-- (void) whispingWithOffset:(NSInteger) offset function:(unsigned char) function keys:(unsigned char) keys;
+- (void) whispingWithOffset:(NSInteger) offset keys:(unsigned char) keys function:(unsigned char) function;
 
 @end

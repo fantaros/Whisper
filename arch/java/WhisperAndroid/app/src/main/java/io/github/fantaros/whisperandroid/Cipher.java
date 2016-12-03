@@ -1,6 +1,7 @@
 package io.github.fantaros.whisperandroid;
 
 import android.util.Base64;
+import android.util.StringBuilderPrinter;
 
 import java.nio.charset.Charset;
 
@@ -16,7 +17,7 @@ public class Cipher {
     public static String encryptoToBase64 (String msg, String password) {
         byte[] msgBytes = msg.getBytes(Charset.forName("UTF8"));
         WhisperKey key = WhisperKey.whisperKeyWithPassword(password);
-        byte[] result = WhisperAlgorithm.encrypto(msgBytes, key);
+        byte[] result = WhisperAlgorithm.encrypto(WhisperAlgorithm.addHeader(msgBytes), key);
         return Base64.encodeToString(result, Base64.URL_SAFE | Base64.NO_WRAP | Base64.NO_PADDING );
     }
 
@@ -24,6 +25,7 @@ public class Cipher {
         byte[] base64Bytes = Base64.decode(base64, Base64.URL_SAFE);
         WhisperKey key = WhisperKey.whisperKeyWithPassword(password);
         byte[] result = WhisperAlgorithm.decrypto(base64Bytes, key);
+        String res = new String(result);
         return Base64.encodeToString(result, Base64.URL_SAFE | Base64.NO_WRAP | Base64.NO_PADDING );
     }
 

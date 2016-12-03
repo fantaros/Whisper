@@ -7,6 +7,7 @@
 //
 
 #import "WSPWhisperData.h"
+#import "GTMBase64.h"
 
 @interface WSPWhisperData ()
 
@@ -29,6 +30,10 @@
 
 + (instancetype) whisperDataWithData:(NSData *)data {
     return [[WSPWhisperData alloc] initWithData:data];
+}
+
++ (instancetype) whisperDataWithNoneHeaderData:(NSData *)data {
+    return [[WSPWhisperData alloc] initWithNoneHeaderData:data];
 }
 
 + (instancetype) whisperDataWithCapacity:(NSUInteger) capacity {
@@ -68,6 +73,30 @@
             unsigned char tmpData[data.length];
             [data getBytes:tmpData length:data.length];
             for (NSInteger i = 0; i < data.length; ++i) {
+                [_byteArray addObject:[NSNumber numberWithUnsignedChar:tmpData[i]]];
+            }
+        }
+    }
+    return self;
+}
+
+- (instancetype) initWithNoneHeaderData:(NSData *)data {
+    self = [super init];
+    if (self){
+        _byteArray = [[NSMutableArray alloc] init];
+        if (data != nil) {
+            NSUInteger length = data.length;
+            unsigned char tmpData[length];
+            [data getBytes:tmpData length:length];
+            unsigned char byte0 = (unsigned char)((unsigned char)(((length & 0xff000000)>>24) & 0xff) ^ ((unsigned char)'w'));
+            unsigned char byte1 = (unsigned char)((unsigned char)(((length & 0x00ff0000)>>16) & 0xff) ^ ((unsigned char)'s'));
+            unsigned char byte2 = (unsigned char)((unsigned char)(((length & 0x0000ff00)>>8) & 0xff) ^ ((unsigned char)'p'));
+            unsigned char byte3 = (unsigned char)((unsigned char)((length & 0x000000ff) & 0xff) ^ ((unsigned char)'f'));
+            [_byteArray addObject:[NSNumber numberWithUnsignedChar:byte0]];
+            [_byteArray addObject:[NSNumber numberWithUnsignedChar:byte1]];
+            [_byteArray addObject:[NSNumber numberWithUnsignedChar:byte2]];
+            [_byteArray addObject:[NSNumber numberWithUnsignedChar:byte3]];
+            for (NSInteger i = 0; i < length; ++i) {
                 [_byteArray addObject:[NSNumber numberWithUnsignedChar:tmpData[i]]];
             }
         }
@@ -137,6 +166,10 @@
     return self.byteArray.count != NSNotFound ? self.byteArray.count : -1;
 }
 
+- (NSInteger) dataLengthWithoutHeader {
+    return self.byteArray.count != NSNotFound ? (self.byteArray.count - 4) : -1;
+}
+
 - (unsigned char) unsignedCharValueAtIndex:(NSUInteger) offset {
     if (offset < [self dataLength]) {
         return [[self.byteArray objectAtIndex:offset] unsignedCharValue];
@@ -158,68 +191,53 @@
     return nil;
 }
 
+- (NSUInteger) decodeHeader {
+    NSUInteger i0 = ([self.byteArray[0] unsignedCharValue] ^ ((unsigned char)'w')) << 24;
+    NSUInteger i1 = ([self.byteArray[1] unsignedCharValue] ^ ((unsigned char)'s')) << 16;
+    NSUInteger i2 = ([self.byteArray[2] unsignedCharValue] ^ ((unsigned char)'p')) << 8;
+    NSUInteger i3 = ([self.byteArray[3] unsignedCharValue] ^ ((unsigned char)'f'));
+    NSUInteger length = (i0 | i1 | i2 | i3);
+    return length;
+}
+
+- (NSData *) dataWithoutHeader {
+    if (self.byteArray.count > 0) {
+        NSUInteger orgLength = [self decodeHeader];
+        if (orgLength < 1) {
+            orgLength = self.byteArray.count - 4;
+        }
+        NSMutableData *data = [[NSMutableData alloc] initWithCapacity:orgLength];
+        unsigned char datatmp[orgLength];
+        for (NSInteger i = 0; i < orgLength; ++i) {
+            unsigned char value = [self.byteArray[(i + 4)] unsignedCharValue];
+            datatmp[i] = value;
+        }
+        [data appendBytes:datatmp length:orgLength];
+        return [data copy];
+    }
+    return nil;
+}
+
 - (NSString *) base64String {
     if (self.byteArray.count > 0) {
         NSData *data = [self data];
         if (data != nil) {
-            return [[self base64EncodedStringWithData:data] stringByAddingPercentEncodingWithAllowedCharacters:WSPWhisperData.chiperAllowedCharsets];
+            NSString *base64 = [[NSString alloc] initWithData:[GTMBase64 encodeData:data] encoding:NSUTF8StringEncoding];
+            return [base64 stringByAddingPercentEncodingWithAllowedCharacters:WSPWhisperData.chiperAllowedCharsets];
         }
     }
     return nil;
 }
 
-- (NSString *) base64EncodedStringWithData:(NSData *)data {
-    //ensure wrapWidth is a multiple of 4
-    NSUInteger wrapWidth = (0 / 4) * 4;
-    
-    const char lookup[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    
-    long long inputLength = [data length];
-    const unsigned char *inputBytes = [data bytes];
-    
-    long long maxOutputLength = (inputLength /3 + 1) * 4;
-    maxOutputLength += wrapWidth? (maxOutputLength / wrapWidth) *2: 0;
-    unsigned char *outputBytes = (unsigned char *)malloc(maxOutputLength);
-    
-    long long i;
-    long long outputLength =0;
-    for (i = 0; i < inputLength -2; i += 3) {
-        outputBytes[outputLength++] = lookup[(inputBytes[i] &0xFC) >> 2];
-        outputBytes[outputLength++] = lookup[((inputBytes[i] &0x03) << 4) | ((inputBytes[i +1] & 0xF0) >>4)];
-        outputBytes[outputLength++] = lookup[((inputBytes[i +1] & 0x0F) <<2) | ((inputBytes[i + 2] & 0xC0) >> 6)];
-        outputBytes[outputLength++] = lookup[inputBytes[i +2] & 0x3F];
-        
-        //add line break
-        if (wrapWidth && (outputLength + 2) % (wrapWidth + 2) == 0) {
-            outputBytes[outputLength++] ='\r';
-            outputBytes[outputLength++] ='\n';
-        }
-    }
-    
-    //handle left-over data
-    if (i == inputLength - 2) {
-        // = terminator
-        outputBytes[outputLength++] = lookup[(inputBytes[i] &0xFC) >> 2];
-        outputBytes[outputLength++] = lookup[((inputBytes[i] &0x03) << 4) | ((inputBytes[i +1] & 0xF0) >>4)];
-        outputBytes[outputLength++] = lookup[(inputBytes[i +1] & 0x0F) <<2];
-        outputBytes[outputLength++] =  '=';
-    } else if (i == inputLength -1) {
-        // == terminator
-        outputBytes[outputLength++] = lookup[(inputBytes[i] &0xFC) >> 2];
-        outputBytes[outputLength++] = lookup[(inputBytes[i] &0x03) << 4];
-        outputBytes[outputLength++] ='=';
-        outputBytes[outputLength++] ='=';
-    }
-    
-    //truncate data to match actual output length
-    outputBytes =realloc(outputBytes, outputLength);
-    NSString *result = [[NSString alloc] initWithBytesNoCopy:outputBytes length:outputLength encoding:NSUTF8StringEncoding freeWhenDone:YES];
-    
-#if !__has_feature(objc_arc)
-    [result autorelease];
-#endif
-    
-    return (outputLength >= 4)? result: nil;
-}
+//- (NSString *) base64StringWithoutHeader {
+//    if (self.byteArray.count > 0) {
+//        NSData *data = [self dataWithoutHeader];
+//        if (data != nil) {
+//            NSString *base64 = [[NSString alloc] initWithData:[GTMBase64 encodeData:data] encoding:NSUTF8StringEncoding];
+//            return [base64 stringByAddingPercentEncodingWithAllowedCharacters:WSPWhisperData.chiperAllowedCharsets];
+//        }
+//    }
+//    return nil;
+//}
 
 @end

@@ -7,11 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WSPWhisperKey.h"
 
 @interface WSPWhisperData : NSObject
 
 + (instancetype) whisperData;
 + (instancetype) whisperDataWithData:(NSData *)data;
++ (instancetype) whisperDataWithNoneHeaderData:(NSData *)data;
 + (instancetype) whisperDataWithCapacity:(NSUInteger) capacity;
 + (instancetype) whisperDataWithUnsignedCharArray:(NSArray *)array;
 
@@ -31,10 +33,15 @@
 - (void) insertResultData:(NSArray *)array atIndexes:(NSIndexSet *)indexes;
 
 - (NSInteger) dataLength;
+- (NSInteger) dataLengthWithoutHeader;
 
 - (unsigned char) unsignedCharValueAtIndex:(NSUInteger) offset;
 
 - (NSData *) data;
+- (NSUInteger) decodeHeader;
+- (NSData *) dataWithoutHeader;
 - (NSString *) base64String;
+- (NSString *) decodeToString;
+//- (NSString *) base64StringWithoutHeader;
 
 @end

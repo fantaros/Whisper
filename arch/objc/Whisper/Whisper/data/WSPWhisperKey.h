@@ -16,6 +16,8 @@
 @property (copy, nonatomic) NSArray *WhisperTable;
 @property (copy, nonatomic) NSArray *WhisperSwapMagic;
 
+- (void) recook:(NSInteger) seed;
+
 - (unsigned char) getKey:(NSUInteger) offset;
 
 - (unsigned char) getRing:(NSUInteger) offset;

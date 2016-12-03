@@ -21,7 +21,7 @@
 @implementation WSPWhisperKey
 
 + (instancetype) whisperKeyWithPassword:(NSString *)password {
-    return [[WSPWhisperKey alloc] initWithPassword:password keyLength:128];
+    return [[WSPWhisperKey alloc] initWithPassword:password keyLength:163];
 }
 
 + (instancetype) whisperKeyWithPassword: (NSString *) password keyLength:(NSUInteger) keyLength {
@@ -40,7 +40,7 @@
              @0xb4, @0x1e, @0xaf, @0x73, @0xb1, @0x07,
              @0x2d, @0x76, @0xc6, @0x9e, @0xa3, @0x6c,
              @0x71, @0x23, @0x38, @0x6f, @0xcb, @0x63,
-             @0x6c, @0xf1, @0x40, @0x8
+             @0x6c, @0xf1, @0x40, @0x82
              ];
     return _WhisperTable;
 }
@@ -50,7 +50,7 @@
              @27,@30,@39,@45,@54,@57,
              @75,@78,@99,@108,@114,@120,
              @135,@141,@147,@156,@177,@180,
-             @198,@201,@210,@216,@225,@22
+             @198,@201,@210,@216,@225,@228
              ];
     return _WhisperSwapMagic;
 }
@@ -68,8 +68,8 @@
     if (self) {
         self.password = password;
         self.keyLength = keyLength;
-        if (self.keyLength < 128) {
-            self.keyLength = 128;
+        if (self.keyLength < 163) {
+            self.keyLength = 163;
         }
         [self setupKey];
         [self setupRing];
@@ -93,7 +93,7 @@
               [NSNumber numberWithUnsignedChar:
                ((unsigned char)
                 (passwordChars[i] ^
-                 [self.WhisperTable[ passwordChars[i] % 64 ] unsignedCharValue]))]
+                 [self.WhisperTable[ passwordChars[i] % self.WhisperTable.count ] unsignedCharValue]))]
               ];
          } else {
              [mutableKeys addObject:
@@ -103,7 +103,7 @@
                     ([mutableKeys[( i + 3 ) % len] unsignedCharValue] & 0x30) |
                     ([mutableKeys[i % len] unsignedCharValue] & 0x0c) |
                     ([mutableKeys[( i + 2 ) % len] unsignedCharValue] & 0x03) ) ^
-                    [self.WhisperTable[passwordChars[i % len] % 64] unsignedCharValue]
+                    [self.WhisperTable[passwordChars[i % len] % self.WhisperTable.count] unsignedCharValue]
                  )
               ) ]];
          }
@@ -121,7 +121,7 @@
              (unsigned char) ([self.WhisperSwapMagic[
                                                     [self regetByte1:[self.whisperStoredKey[i % self.keyLength] unsignedCharValue]
                                                                byte2:[self.whisperStoredKey[(i + 1)%self.keyLength] unsignedCharValue]]
-                                                    % 24] unsignedCharValue])
+                                                    % self.WhisperSwapMagic.count] unsignedCharValue])
              )] ];
     }
     self.whisperStoredRing = [mutableRing copy];
@@ -133,12 +133,27 @@
     return ret;
 }
 
+- (void) recook:(NSInteger) seed {
+    if (self.whisperStoredKey != nil) {
+        if (seed < 0) {
+            seed = abs(seed);
+        }
+        seed = (unsigned char)(seed % 256);
+        NSMutableArray *keys = [[NSMutableArray alloc] initWithCapacity:self.whisperStoredKey.count];
+        for (NSInteger i = 0; i < self.whisperStoredKey.count; ++i) {
+            NSNumber *val = self.whisperStoredKey[i];
+            [keys addObject:[NSNumber numberWithUnsignedChar:(unsigned char)([val unsignedCharValue] ^ seed)]];
+        }
+        self.whisperStoredKey = keys;
+    }
+}
+
 - (unsigned char) getKey:(NSUInteger) offset {
     return [self.whisperStoredKey[offset % self.keyLength] unsignedCharValue];
 }
 
 - (unsigned char) getRing:(NSUInteger) offset {
-    return [self.whisperStoredRing[offset % 64] unsignedCharValue];
+    return [self.whisperStoredRing[offset % self.whisperStoredRing.count] unsignedCharValue];
 }
 
 @end

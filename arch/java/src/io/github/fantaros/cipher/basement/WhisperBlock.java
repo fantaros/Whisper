@@ -80,8 +80,8 @@ public class WhisperBlock {
         }
     }
 
-    public void whisping(int offset, byte function, byte keys) {
-        valuearray[offset] = logix.logix(valuearray[offset], function, keys);
+    public void whisping(int offset, byte keys, byte function) {
+        valuearray[offset] = logix.logix(valuearray[offset], keys, function);
     }
 
     public String toString() {

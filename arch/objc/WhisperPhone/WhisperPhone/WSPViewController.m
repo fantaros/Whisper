@@ -34,7 +34,7 @@
 - (IBAction)wspButtonClick:(UIButton *)sender {
     NSString *msg = self.msgText.text;
     NSString *pwd = self.pwdText.text;
-    WSPWhisperData *inputData = [WSPWhisperData whisperDataWithData:[msg dataUsingEncoding:NSUTF8StringEncoding]];
+    WSPWhisperData *inputData = [WSPWhisperData whisperDataWithNoneHeaderData:[msg dataUsingEncoding:NSUTF8StringEncoding]];
     if (inputData != nil) {
         WSPWhisperAlgorithm *algorithm = [WSPWhisperAlgorithm whisperAlgorithm];
         WSPWhisperKey *key = [WSPWhisperKey whisperKeyWithPassword:pwd];
