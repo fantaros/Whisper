@@ -19,9 +19,8 @@
 -(instancetype) init {
     self = [super init];
     if (self) {
-//        NSDate *now = [[NSDate alloc] init];
-//        NSInteger seed = (NSInteger)((NSInteger)[now timeIntervalSince1970] % 65536);
-        [self setupSelfWithSeed: 198848];
+        //MagicNo is 1989215
+        [self setupSelfWithSeed: 1989215];
     }
     return self;
 }
@@ -58,10 +57,12 @@
     _logixTable = seedArray;
 }
 
+//返回某个部分异或映射
 -(unsigned char) mappedLogixTableH:(unsigned char) src {
     return [[_logixTable objectAtIndex:((NSInteger)(src & 31))] unsignedCharValue];
 }
 
+//通过部分异或映射计算两个操作数的结果
 -(unsigned char) logixWithOperatorByte1:(unsigned char) opt1 operatorByte2:(unsigned char) opt2 methodType:(unsigned char) methodNo {
     return (unsigned char)(((NSInteger)opt1) ^ ((NSInteger)opt2) ^ ((NSInteger)[self mappedLogixTableH:methodNo]));
 }

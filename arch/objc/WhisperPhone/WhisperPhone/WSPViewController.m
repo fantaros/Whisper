@@ -36,10 +36,16 @@
     NSString *pwd = self.pwdText.text;
     WSPWhisperData *inputData = [WSPWhisperData whisperDataWithNoneHeaderData:[msg dataUsingEncoding:NSUTF8StringEncoding]];
     if (inputData != nil) {
-        WSPWhisperAlgorithm *algorithm = [WSPWhisperAlgorithm whisperAlgorithm];
+        WSPWhisperAlgorithm *algorithm = [WSPWhisperAlgorithm whisperAlgorithmWithBlockSize:3];
         WSPWhisperKey *key = [WSPWhisperKey whisperKeyWithPassword:pwd];
-        WSPWhisperData *outputData = [algorithm encrypto:inputData key:key];
+        WSPWhisperData *outputData = [algorithm encrypt:inputData key:key];
         self.resultView.text = [outputData base64String];
+        WSPWhisperData *deinput = [WSPWhisperData whisperDataWithData: [outputData data]];
+        WSPWhisperKey *dekey = [WSPWhisperKey whisperKeyWithPassword:pwd];
+        WSPWhisperData *deoutput = [algorithm decrypt:deinput key:dekey];
+        NSString *outStr = [[NSString alloc] initWithData:[deoutput dataWithoutHeader] encoding:NSUTF8StringEncoding];
+        NSLog(@"deoutputData = %@", outStr);
+        NSLog(@"org = %@", msg);
     }
 }
 

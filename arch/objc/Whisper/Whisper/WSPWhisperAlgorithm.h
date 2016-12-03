@@ -10,12 +10,16 @@
 #import "WSPWhisperData.h"
 #import "WSPWhisperKey.h"
 
+#define WHISPER_DEFAULT_BLOCKSIZE 3
+
 @interface WSPWhisperAlgorithm : NSObject
 
 + (instancetype) whisperAlgorithm;
++ (instancetype) whisperAlgorithmWithBlockSize:(NSUInteger) blockSize;
 
-- (WSPWhisperData *) encrypto:(WSPWhisperData *)baseData key:(WSPWhisperKey *) password;
-
-- (WSPWhisperData *) decrypto:(WSPWhisperData *)baseData key:(WSPWhisperKey *) password;
+//Whisper加密
+- (WSPWhisperData *) encrypt:(WSPWhisperData *)baseData key:(WSPWhisperKey *) password;
+//Whisper解密
+- (WSPWhisperData *) decrypt:(WSPWhisperData *)baseData key:(WSPWhisperKey *) password;
 
 @end

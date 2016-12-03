@@ -26,22 +26,22 @@
     [super tearDown];
 }
 
-- (void)testWhisperAlgorithm {
+- (void) testWhisperAlgorithm {
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
-    WSPWhisperAlgorithm *algorithm = [WSPWhisperAlgorithm whisperAlgorithm];
+    WSPWhisperAlgorithm *algorithm = [WSPWhisperAlgorithm whisperAlgorithmWithBlockSize:7];
 //    NSString *dataString = @"这是一段要被加密的测试代码呢。";
-//    NSString *dataString = @"习近平祝贺古特雷斯出任下届联合国秘书长，强调中国将坚定支持古特雷斯履行好秘书长工作职责。习近平指出，作为最具普遍性、权威性、代表性的政府间国际组织，联合国在应对全球性挑战中作用不可代替。第二次世界大战结束70多年来，世界实现了总体和平、持续发展的态势，联合国对此功不可没。随着国际形势的发展变化，各国对联合国的期待上升，赞成联合国发挥更大作用。联合国应当旗帜鲜明地维护《联合国宪章》宗旨和原则，积极有为维护国际和平与安全，持之以恒推进共同发展，特别是要落实好2030年可持续发展议程和气候变化《巴黎协定》，照顾发展中国家利益，多为发展中国家发声、办事";
-    NSString *dataString = @"fan";
+    NSString *dataString = @"习近平祝贺古特雷斯出任下届联合国秘书长，强调中国将坚定支持古特雷斯履行好秘书长工作职责。习近平指出，作为最具普遍性、权威性、代表性的政府间国际组织，联合国在应对全球性挑战中作用不可代替。第二次世界大战结束70多年来，世界实现了总体和平、持续发展的态势，联合国对此功不可没。随着国际形势的发展变化，各国对联合国的期待上升，赞成联合国发挥更大作用。联合国应当旗帜鲜明地维护《联合国宪章》宗旨和原则，积极有为维护国际和平与安全，持之以恒推进共同发展，特别是要落实好2030年可持续发展议程和气候变化《巴黎协定》，照顾发展中国家利益，多为发展中国家发声、办事";
+//    NSString *dataString = @"aaaaaaaa";
     NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
     WSPWhisperData *inputData = [WSPWhisperData whisperDataWithNoneHeaderData:data];
     if (data != nil) {
         WSPWhisperKey *enkey = [WSPWhisperKey whisperKeyWithPassword:@"fantasy88"];
-        WSPWhisperData *outputData = [algorithm encrypto:inputData key:enkey];
+        WSPWhisperData *outputData = [algorithm encrypt:inputData key:enkey];
         NSLog(@"outputData = %@", [outputData base64String]);
         WSPWhisperData *deinput = [WSPWhisperData whisperDataWithData: [outputData data]];
         WSPWhisperKey *dekey = [WSPWhisperKey whisperKeyWithPassword:@"fantasy88"];
-        WSPWhisperData *deoutput = [algorithm decrypto:deinput key:dekey];
+        WSPWhisperData *deoutput = [algorithm decrypt:deinput key:dekey];
         NSString *outStr = [[NSString alloc] initWithData:[deoutput dataWithoutHeader] encoding:NSUTF8StringEncoding];
         NSLog(@"deoutputData = %@", outStr);
         NSLog(@"org = %@", dataString);

@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		890242D41DF3013E00F10902 /* WSPWhisperBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 890242D31DF3013E00F10902 /* WSPWhisperBlock.m */; };
 		890A1F4B1DEC43290002D528 /* WSPLogix.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F411DEC43290002D528 /* WSPLogix.m */; };
-		890A1F4C1DEC43290002D528 /* WSPWhisperBlock4.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F431DEC43290002D528 /* WSPWhisperBlock4.m */; };
 		890A1F4D1DEC43290002D528 /* WSPWhisperData.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F461DEC43290002D528 /* WSPWhisperData.m */; };
 		890A1F4E1DEC43290002D528 /* WSPWhisperKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F481DEC43290002D528 /* WSPWhisperKey.m */; };
 		890A1F4F1DEC43290002D528 /* WSPWhisperAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A1F4A1DEC43290002D528 /* WSPWhisperAlgorithm.m */; };
@@ -42,10 +42,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		890242D21DF3013E00F10902 /* WSPWhisperBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPWhisperBlock.h; sourceTree = "<group>"; };
+		890242D31DF3013E00F10902 /* WSPWhisperBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPWhisperBlock.m; sourceTree = "<group>"; };
 		890A1F401DEC43290002D528 /* WSPLogix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPLogix.h; sourceTree = "<group>"; };
 		890A1F411DEC43290002D528 /* WSPLogix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPLogix.m; sourceTree = "<group>"; };
-		890A1F421DEC43290002D528 /* WSPWhisperBlock4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPWhisperBlock4.h; sourceTree = "<group>"; };
-		890A1F431DEC43290002D528 /* WSPWhisperBlock4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPWhisperBlock4.m; sourceTree = "<group>"; };
 		890A1F451DEC43290002D528 /* WSPWhisperData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPWhisperData.h; sourceTree = "<group>"; };
 		890A1F461DEC43290002D528 /* WSPWhisperData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPWhisperData.m; sourceTree = "<group>"; };
 		890A1F471DEC43290002D528 /* WSPWhisperKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPWhisperKey.h; sourceTree = "<group>"; };
@@ -63,6 +63,7 @@
 		8968CC161DED28BA00EF7F41 /* NSString+WSPBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+WSPBase64.h"; sourceTree = "<group>"; };
 		8968CC171DED28BA00EF7F41 /* NSString+WSPBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+WSPBase64.m"; sourceTree = "<group>"; };
 		89F498391DDD873F007B734F /* libWhisper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWhisper.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		89FE678C1DF33AE6003220B6 /* Whisper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Whisper.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,10 +88,10 @@
 		890A1F3F1DEC43290002D528 /* basement */ = {
 			isa = PBXGroup;
 			children = (
+				890242D21DF3013E00F10902 /* WSPWhisperBlock.h */,
+				890242D31DF3013E00F10902 /* WSPWhisperBlock.m */,
 				890A1F401DEC43290002D528 /* WSPLogix.h */,
 				890A1F411DEC43290002D528 /* WSPLogix.m */,
-				890A1F421DEC43290002D528 /* WSPWhisperBlock4.h */,
-				890A1F431DEC43290002D528 /* WSPWhisperBlock4.m */,
 				8968CC131DED272C00EF7F41 /* NSData+WSPBase64.h */,
 				8968CC141DED272C00EF7F41 /* NSData+WSPBase64.m */,
 				8968CC161DED28BA00EF7F41 /* NSString+WSPBase64.h */,
@@ -155,6 +156,7 @@
 				890A1F441DEC43290002D528 /* data */,
 				890A1F491DEC43290002D528 /* WSPWhisperAlgorithm.h */,
 				890A1F4A1DEC43290002D528 /* WSPWhisperAlgorithm.m */,
+				89FE678C1DF33AE6003220B6 /* Whisper.h */,
 			);
 			path = Whisper;
 			sourceTree = "<group>";
@@ -260,7 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				890A1F4D1DEC43290002D528 /* WSPWhisperData.m in Sources */,
-				890A1F4C1DEC43290002D528 /* WSPWhisperBlock4.m in Sources */,
+				890242D41DF3013E00F10902 /* WSPWhisperBlock.m in Sources */,
 				8968CC181DED28BA00EF7F41 /* NSString+WSPBase64.m in Sources */,
 				895E746B1DEFEFA100ACC8D6 /* GTMBase64.m in Sources */,
 				890A1F4B1DEC43290002D528 /* WSPLogix.m in Sources */,
@@ -343,7 +345,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -386,7 +388,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macos";

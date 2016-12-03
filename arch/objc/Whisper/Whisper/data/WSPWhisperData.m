@@ -37,7 +37,7 @@
 }
 
 + (instancetype) whisperDataWithCapacity:(NSUInteger) capacity {
-    return [[WSPWhisperData alloc] init];
+    return [[WSPWhisperData alloc] initWithCapacity:capacity];
 }
 
 + (instancetype) whisperDataWithUnsignedCharArray:(NSArray *)array {
@@ -54,6 +54,16 @@
 - (void) setByteArray:(NSMutableArray *)byteArray {
     if (byteArray != nil) {
         _byteArray = byteArray;
+    }
+}
+
+//清除明文中的盐分
+- (void) lightDataWithSalt:(unsigned char) salt {
+    if (_byteArray.count > 0) {
+        for (NSInteger i = 0; i < _byteArray.count; ++i) {
+            unsigned char ad = [_byteArray[i] unsignedCharValue];
+            _byteArray[i] = [NSNumber numberWithUnsignedChar:(ad ^ salt)];
+        }
     }
 }
 
@@ -92,10 +102,10 @@
             unsigned char byte1 = (unsigned char)((unsigned char)(((length & 0x00ff0000)>>16) & 0xff) ^ ((unsigned char)'s'));
             unsigned char byte2 = (unsigned char)((unsigned char)(((length & 0x0000ff00)>>8) & 0xff) ^ ((unsigned char)'p'));
             unsigned char byte3 = (unsigned char)((unsigned char)((length & 0x000000ff) & 0xff) ^ ((unsigned char)'f'));
-            [_byteArray addObject:[NSNumber numberWithUnsignedChar:byte0]];
             [_byteArray addObject:[NSNumber numberWithUnsignedChar:byte1]];
-            [_byteArray addObject:[NSNumber numberWithUnsignedChar:byte2]];
             [_byteArray addObject:[NSNumber numberWithUnsignedChar:byte3]];
+            [_byteArray addObject:[NSNumber numberWithUnsignedChar:byte0]];
+            [_byteArray addObject:[NSNumber numberWithUnsignedChar:byte2]];
             for (NSInteger i = 0; i < length; ++i) {
                 [_byteArray addObject:[NSNumber numberWithUnsignedChar:tmpData[i]]];
             }
@@ -108,6 +118,9 @@
     self = [super init];
     if (self) {
         _byteArray = [[NSMutableArray alloc] initWithCapacity:capacity];
+        for (NSInteger i = 0; i < capacity; ++i) {
+            _byteArray[i] = [NSNumber numberWithInt:0];
+        }
     }
     return self;
 }
@@ -148,12 +161,17 @@
     }
 }
 
-- (void) acceptByteArray:(NSArray *)byteArray startOffset:(NSUInteger) offset {
-//    for (NSInteger i = 0; i < 4; ++i) {
-//        [self setNumber:byteArray[i] atIndexedSubscript:(offset + i)];
-//    }
-    NSMutableIndexSet *set = [[NSMutableIndexSet alloc] initWithIndexesInRange:NSMakeRange(offset, 4)];
+//分组加密完成后回写输出字符流
+- (void) acceptByteArray:(NSArray *)byteArray startOffset:(NSUInteger) offset blockSize:(NSUInteger) blockSize {
+    NSMutableIndexSet *set = [[NSMutableIndexSet alloc] initWithIndexesInRange:NSMakeRange(offset, blockSize)];
     [self insertResultData:byteArray atIndexes:set];
+}
+
+//分组解密完成后回写输出字符流
+- (void) deAcceptByteArray:(NSArray *)byteArray startOffset:(NSUInteger) offset  blockSize:(NSUInteger) blockSize {
+    for (NSInteger i = 0; i < blockSize; ++i) {
+        [self setNumber:byteArray[i] atIndexedSubscript:(offset + i)];
+    }
 }
 
 - (void) insertResultData:(NSArray *)array atIndexes:(NSIndexSet *)indexes {
@@ -177,6 +195,26 @@
     return 0;
 }
 
+- (void) resumeFromBlockArray:(NSArray *)blockArray {
+    if (blockArray.count > 0) {
+        NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity:_byteArray.count];
+        for (NSInteger i = 0; i < _byteArray.count; ++i) {
+            newArray [i] = [NSNumber numberWithInt:0];
+        }
+        NSUInteger offset = 0;
+        for (NSInteger i = 0; i < blockArray.count; ++i) {
+            NSUInteger location = [blockArray[i] unsignedIntegerValue] * 4;
+            newArray[location] = [_byteArray[offset] copy];
+            newArray[location + 1] = [_byteArray[offset + 1] copy];
+            newArray[location + 2] = [_byteArray[offset + 2] copy];
+            newArray[location + 3] = [_byteArray[offset + 3] copy];
+            offset = offset + 4;
+        }
+        _byteArray = newArray;
+    }
+}
+
+//获得NSData数据对象
 - (NSData *) data {
     if (self.byteArray.count > 0) {
         NSMutableData *data = [[NSMutableData alloc] initWithCapacity:self.byteArray.count];
@@ -191,19 +229,24 @@
     return nil;
 }
 
+//解码加密头部数据
 - (NSUInteger) decodeHeader {
-    NSUInteger i0 = ([self.byteArray[0] unsignedCharValue] ^ ((unsigned char)'w')) << 24;
-    NSUInteger i1 = ([self.byteArray[1] unsignedCharValue] ^ ((unsigned char)'s')) << 16;
-    NSUInteger i2 = ([self.byteArray[2] unsignedCharValue] ^ ((unsigned char)'p')) << 8;
-    NSUInteger i3 = ([self.byteArray[3] unsignedCharValue] ^ ((unsigned char)'f'));
+    NSUInteger i0 = ([self.byteArray[2] unsignedCharValue] ^ ((unsigned char)'w')) << 24;
+    NSUInteger i1 = ([self.byteArray[0] unsignedCharValue] ^ ((unsigned char)'s')) << 16;
+    NSUInteger i2 = ([self.byteArray[3] unsignedCharValue] ^ ((unsigned char)'p')) << 8;
+    NSUInteger i3 = ([self.byteArray[1] unsignedCharValue] ^ ((unsigned char)'f'));
     NSUInteger length = (i0 | i1 | i2 | i3);
+    if (length > _byteArray.count) {
+        return _byteArray.count;
+    }
     return length;
 }
 
+//获得去除加密头部信息的NSData数据对象
 - (NSData *) dataWithoutHeader {
     if (self.byteArray.count > 0) {
         NSUInteger orgLength = [self decodeHeader];
-        if (orgLength < 1) {
+        if (orgLength > self.byteArray.count - 4 || orgLength < 1) {
             orgLength = self.byteArray.count - 4;
         }
         NSMutableData *data = [[NSMutableData alloc] initWithCapacity:orgLength];
@@ -218,6 +261,7 @@
     return nil;
 }
 
+//数据以base64编码表示的结果
 - (NSString *) base64String {
     if (self.byteArray.count > 0) {
         NSData *data = [self data];
@@ -229,15 +273,17 @@
     return nil;
 }
 
-//- (NSString *) base64StringWithoutHeader {
-//    if (self.byteArray.count > 0) {
-//        NSData *data = [self dataWithoutHeader];
-//        if (data != nil) {
-//            NSString *base64 = [[NSString alloc] initWithData:[GTMBase64 encodeData:data] encoding:NSUTF8StringEncoding];
-//            return [base64 stringByAddingPercentEncodingWithAllowedCharacters:WSPWhisperData.chiperAllowedCharsets];
-//        }
-//    }
-//    return nil;
-//}
+//将数据转换成字符串（仅在数据对象保持的是明文且NSData对象对应UTF8字符串时才能成功转换）
+- (NSString *) decodeToUTF8String {
+    return [[NSString alloc] initWithData:[self dataWithoutHeader] encoding:NSUTF8StringEncoding];
+}
+
+//将数据转换成字符串（仅在数据对象保持的是明文且NSData对象对应字符串时才能成功转换）
+- (NSString *) decodeToString:(NSStringEncoding *)encoding {
+    if (encoding == nil) {
+        encoding = NSUTF8StringEncoding;
+    }
+    return [[NSString alloc] initWithData:[self dataWithoutHeader] encoding:encoding];
+}
 
 @end

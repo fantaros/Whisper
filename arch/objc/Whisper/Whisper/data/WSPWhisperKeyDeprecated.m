@@ -10,13 +10,12 @@
 
 @interface WSPWhisperKey()
 
-//已保存的密钥
 @property (copy, nonatomic) NSArray *whisperStoredKey;
-//用户密码
+@property (copy, nonatomic) NSArray *whisperStoredRing;
 @property (copy, nonatomic) NSString *password;
-//密钥整体的盐°计算完成标志
+
 @property (assign, nonatomic) BOOL keySaltCalculated;
-//密钥长度
+
 @property (assign, nonatomic) NSInteger keyLength;
 
 @end
@@ -33,7 +32,6 @@
     return [[WSPWhisperKey alloc] initWithPassword:password keyLength:keyLength];
 }
 
-//已初始化的whisper表，保存了公用的密钥初始化数据
 - (NSArray *) WhisperTable {
     _WhisperTable = @[
              @0xd6, @0x9c, @0x2b, @0xd7, @0xbd, @0x66,
@@ -51,8 +49,22 @@
     return _WhisperTable;
 }
 
+- (NSArray *) WhisperSwapMagic {
+    _WhisperSwapMagic = @[
+             @27,@30,@39,@45,@54,@57,
+             @75,@78,@99,@108,@114,@120,
+             @135,@141,@147,@156,@177,@180,
+             @198,@201,@210,@216,@225,@228
+             ];
+    return _WhisperSwapMagic;
+}
+
 - (NSArray *) whisperStoredKey {
     return _whisperStoredKey;
+}
+
+- (NSArray *) whisperStoredRing {
+    return _whisperStoredRing;
 }
 
 - (instancetype) initWithPassword: (NSString *) password keyLength:(NSUInteger) keyLength {
@@ -65,11 +77,11 @@
             self.keyLength = 163;
         }
         [self setupKey];
+        [self setupRing];
     }
     return self;
 }
 
-//密钥整体的盐°
 - (unsigned char) keySalt {
     if (!_keySaltCalculated) {
         _keySalt = [self calculateSalt:self.whisperStoredKey];
@@ -78,7 +90,6 @@
     return _keySalt;
 }
 
-//计算某个字节数组的盐°
 - (unsigned char) calculateSalt:(NSArray *) src {
     if (src == nil) {
         return 0;
@@ -130,13 +141,28 @@
     }
 }
 
+- (void) setupRing {
+    NSInteger i,j;
+    NSMutableArray *mutableRing = [[NSMutableArray alloc] init];
+    for (i = 0; i < self.whisperStoredKey.count - 1; i += 2) {
+        j = i / 2;
+        [mutableRing addObject:
+            [NSNumber numberWithUnsignedChar:(
+             (unsigned char) ([self.WhisperSwapMagic[
+                                                    [self regetByte1:[self.whisperStoredKey[i % self.keyLength] unsignedCharValue]
+                                                               byte2:[self.whisperStoredKey[(i + 1)%self.keyLength] unsignedCharValue]]
+                                                    % self.WhisperSwapMagic.count] unsignedCharValue])
+             )] ];
+    }
+    self.whisperStoredRing = [mutableRing copy];
+}
+
 - (unsigned char) regetByte1:(unsigned char) byte1 byte2:(unsigned char) byte2 {
     unsigned char ret = (unsigned char)(byte1 & 0xf0);
     ret = (unsigned char)(ret | (byte2 & 0x0f));
     return ret;
 }
 
-//利用明文的信息对key再构造，并返回结构转换数组
 - (NSArray *) recook:(NSUInteger) outputLength blockSize:(NSUInteger) blockSize{
     if (self.whisperStoredKey != nil) {
         if (outputLength < 0) {
@@ -155,14 +181,13 @@
     return nil;
 }
 
-//输出乱序排列数组
 - (NSArray *) buildSwapArray:(NSUInteger) seed salt:(NSUInteger) salt{
     NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity:
                               seed];
     for (NSInteger i = 0; i < seed; ++i) {
         [result addObject:[NSNumber numberWithUnsignedInteger:i]];
     }
-    //乱序过程
+    //shuffle
     NSUInteger tmp;
     for (NSInteger o = seed - 1; o > 0; o = o - 1) {
         NSUInteger j = (NSUInteger)(((NSInteger)(([self getKey:[self getRing:(o ^ salt)]] / 256.0) * o)) % seed);
@@ -173,13 +198,12 @@
     return [result copy];
 }
 
-//获得offset位置的密钥
 - (unsigned char) getKey:(NSUInteger) offset {
     return [self.whisperStoredKey[offset % self.keyLength] unsignedCharValue];
 }
-//获得offset位置的已加工密钥
+
 - (unsigned char) getRing:(NSUInteger) offset {
-    return [self.whisperStoredKey[(offset ^ self.keyLength) % self.keyLength] unsignedCharValue];
+    return [self.whisperStoredRing[offset % self.whisperStoredRing.count] unsignedCharValue];
 }
 
 @end
