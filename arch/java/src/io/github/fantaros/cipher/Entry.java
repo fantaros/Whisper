@@ -14,7 +14,7 @@ public class Entry {
     	String org = "fan";
     	byte[] orgdata = org.getBytes(Charset.forName("UTF8"));
     	WhisperKey key = WhisperKey.whisperKeyWithPassword("fantasy88");
-    	byte[] output = algorithm.encrypto(WhisperAlgorithm.addHeader(orgdata), key);
+    	byte[] output = algorithm.encrypto(WhisperAlgorithm.addHeader(orgdata), key, 3);
     	System.out.println(output);
     }
 }

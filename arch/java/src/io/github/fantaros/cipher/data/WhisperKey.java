@@ -26,47 +26,83 @@ public class WhisperKey {
 			0x71, 0x23, 0x38, 0x6f, 0xcb, 0x63,
 			0x6c, 0xf1, 0x40, 0x82
 	};
-
-	private static final int[] WhisperSwapMagic = new int[] {
-			27,30,39,45,54,57,
-			75,78,99,108,114,120,
-			135,141,147,156,177,180,
-			198,201,210,216,225,228
-	};
-
+	
 	private byte[] whisperStoredKey;
-	private byte[] whisperStoredRing;
 	private String password;
 	private int keyLength;
+	private byte keySalt;
+	private boolean keySaltCaculated;
 
 	private WhisperKey (String password) {
+		keySaltCaculated = false;
 		this.password = password;
 		this.keyLength = 163;
 		setupKey();
-		setupRing();
 	}
 
 	private WhisperKey (String password, int keyLength) {
+		keySaltCaculated = false;
 		this.password = password;
 		this.keyLength = (keyLength >= 163 ? keyLength : 163 );
 		setupKey();
-		setupRing();
+	}
+	
+	public byte getKeySalt() {
+		if (!this.keySaltCaculated) {
+			this.keySalt = (byte) this.calculateSalt(this.whisperStoredKey);
+			this.keySaltCaculated = true;
+		}
+		return this.keySalt;
+	}
+	
+	public int calculateSalt (byte[] src) {
+		if(src == null) {
+			return 0;
+		}
+		byte salt = this.getKey(0);
+		for (int i = 0; i < src.length; ++i) {
+			byte key = this.getKey(i);
+			byte val = src[i];
+			salt = (byte)(((unsignedByte(salt) * unsignedByte(val)) ^ key) % 256); 
+		}
+		return unsignedByte(salt) ^ unsignedByte(this.getKey(this.whisperStoredKey.length - 1));
 	}
 
-	public void recook(long seed) {
+	public List<Integer> recook(long outputLength, int blockSize) {
 		if (this.whisperStoredKey != null) {
-			if (seed < 0) {
-				seed = Math.abs(seed);
-			}
-			seed = (long)unsignedByte( (int)(seed % 256) );
-			byte[] keys = new byte[this.whisperStoredKey.length];
-			for (int i = 0; i < this.whisperStoredKey.length; ++i) {
-				byte val = this.whisperStoredKey[i];
-				keys[i] = (byte) unsignedByte(((int) (val ^ seed)));
-			}
-			this.whisperStoredKey = keys;
+			if (outputLength < 0) {
+	            outputLength = Math.abs(outputLength);
+	        }
+	        byte seed = (byte)unsignedByte(outputLength % 256);
+	        List<Byte> keys = new ArrayList<Byte>(this.whisperStoredKey.length);
+	        for (int i = 0; i < this.whisperStoredKey.length; ++i) {
+	        	byte val = this.whisperStoredKey[i];
+	        	keys.add((byte)unsignedByte(val ^ seed));
+	        }
+	        this.whisperStoredKey = new byte[keys.size()];
+	        for (int i = 0; i < keys.size(); ++i) {
+	        	this.whisperStoredKey[i] = keys.get(i);
+	        }
+	        int blockCount = ((int)outputLength / blockSize);
+	        return  this.buildSwapArray(blockCount, 0);
 		}
-
+		return null;
+	}
+	
+	public List<Integer> buildSwapArray(int seed, int salt) {
+		List<Integer> result = new ArrayList<Integer>(seed);
+		for (int i = 0; i < seed; ++i) {
+			result.add(i);
+		}
+		//乱序过程
+		int tmp;
+		for (int o = seed - 1; o > 0; o = o - 1) {
+			int j = (int)(((int)((this.getKey(this.getRing(o ^ salt)) / 256.0) * o)) % seed);
+			tmp = result.get(o).intValue();
+			result.set(o, result.get(j).intValue());
+			result.set(j, tmp);
+		}
+		return result;
 	}
 
 	private void setupKey (){
@@ -96,25 +132,6 @@ public class WhisperKey {
 			this.whisperStoredKey[i] = mutableKeys.get(i).byteValue();
 		}
 	}
-
-	private void setupRing (){
-		int i;
-		List<Byte> mutableRing = new ArrayList<Byte>();
-	    for (i = 0; i < this.whisperStoredKey.length - 1; i += 2) {
-	        byte res = (byte)WhisperSwapMagic[reget((int)(this.whisperStoredKey[i % this.keyLength]), (int)(this.whisperStoredKey[(i + 1) % this.keyLength])) % WhisperSwapMagic.length];
-	        mutableRing.add(res);
-	    }
-	    this.whisperStoredRing = new byte[mutableRing.size()];
-		for(i = 0; i < mutableRing.size(); ++i) {
-			this.whisperStoredRing[i] = mutableRing.get(i).byteValue();
-		}
-	}
-	
-//	 private byte reget(byte a, byte b) {
-//         byte ret = (byte)(a & 0xf0);
-//         ret = (byte)(ret | (b & 0x0f));
-//         return ret;
-//     }
 	
 	private int unsignedByte(int data) {
 		if (data >= 0) {
@@ -124,20 +141,28 @@ public class WhisperKey {
 		}
 	}
 	
-	private int unsignedByteToInt(int data) {
+	private int unsignedByte(short data) {
 		if (data >= 0) {
 			return data;
 		} else {
 			return 256 + data;
 		}
 	}
+	
+	private int unsignedByte(long data) {
+		if (data >= 0) {
+			return (int) data;
+		} else {
+			return (int) (256 + data);
+		}
+	}
 
      public byte getKey(int offset) {
-         return this.whisperStoredKey[unsignedByteToInt(offset) % this.keyLength];
+         return this.whisperStoredKey[unsignedByte(offset) % this.keyLength];
      }
 
      public byte getRing(int offset) {
-         return this.whisperStoredRing[unsignedByteToInt(offset) % this.whisperStoredRing.length];
+         return this.whisperStoredKey[(unsignedByte(offset) ^ this.keyLength) % this.keyLength];
      }
 
      public int reget(int a, int b) {

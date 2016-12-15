@@ -1,5 +1,8 @@
 package io.github.fantaros.cipher;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 import io.github.fantaros.cipher.basement.WhisperBlock;
 import io.github.fantaros.cipher.data.WhisperKey;
 
@@ -46,57 +49,73 @@ public class WhisperAlgorithm {
 			return 256 + data;
 		}
 	}
-
-	public static int unsignedByteToInt(int data) {
-		if (data >= 0) {
-			return data;
-		} else {
-			return 256 + data;
-		}
-	}
 	
-	public static byte[] encrypto(byte[] baseData, WhisperKey password) {
+	public static byte[] encrypto(byte[] baseData, WhisperKey password, int blockSize) {
 		if (baseData != null && password != null) {
 			int len = baseData.length;
-	        int olen = (int)((len / 4.0) + 0.9) * 4;
-			password.recook(olen);
-	        byte[] oData = new byte[olen];
-	        WhisperBlock block = new WhisperBlock();
+	        int olen = (int)((len / (double)blockSize) + 0.9) * blockSize;
+			List<Integer> blockList = password.recook(olen, blockSize);
+	        byte[] oData = new byte[olen + 1];
+	        WhisperBlock block = new WhisperBlock(blockSize);
 	        int j;
-	        for (int i = 0; i < baseData.length; i += 4) {
-	        	block.setValue(baseData, i);
-	        	byte ring = password.getRing((int)(i/4));
+	        byte dataSalt = (byte)(unsignedByte(password.calculateSalt(baseData)) ^ unsignedByte(password.getKeySalt()));
+	        byte[] cookedBaseData = new byte[olen];
+	        for (int i = 0; i < baseData.length; ++i) {
+	        	cookedBaseData[i] = (byte)(baseData[i] ^ unsignedByte(dataSalt));
+	        }
+	        if(olen > len) {
+	        	for (int i = 0; i < (olen - len); ++i) {
+	        		if (len + i < olen) {
+	        			cookedBaseData[len + i] = (byte)(0 ^ unsignedByte(dataSalt));
+	        		}
+	        	}
+	        }
+	        
+	        int location = 0;
+	        for (int i = 0; i < blockList.size(); ++i) {
+	        	int offset = blockList.get(i) * blockSize;
+	        	block.refreshData(cookedBaseData, offset);
+	        	byte ring = password.getRing((int)(location / blockSize));
 	            byte key;
-	            block.blockSwap(ring);
-	            for (j = 0; j < 4; ++j) {
-	            	key = password.getKey(i + j);
+	            block.blockSwapWithKey(password, ring);
+	            for (j = 0; j < blockSize; ++j) {
+	            	key = password.getKey((location + j));
 	            	block.whisping(j, key, password.getKey(key));
 	            }
-	            block.accept(oData, i);
+	            block.accept(oData, location);
+	            location = location + blockSize;
 	        }
+	        oData[olen] = (byte)unsignedByte((int)dataSalt ^ (int)password.getKey(0));
 	        return oData;
 		}
 		return null;
 	}
 	
-	public static byte[] decrypto(byte[] baseData, WhisperKey password) {
+	public static byte[] decrypto(byte[] baseData, WhisperKey password, int blockSize) {
 		if (baseData != null && password != null) {
 			int len = baseData.length;
-	        int olen = len;
-			password.recook(olen);
+	        int olen = len - 1;
+	        List<Integer> blockList = password.recook(olen, blockSize);
 	        byte[] oData = new byte[olen];
-	        WhisperBlock block = new WhisperBlock();
+	        WhisperBlock block = new WhisperBlock(blockSize);
 	        int j;
-	        for (int i = 0; i < baseData.length; i += 4) {
-	        	block.setValue(baseData, i);
-	        	byte ring = password.getRing((int)(i/4));
+	        int location = 0;
+	        byte dataSalt = (byte)(unsignedByte(baseData[baseData.length - 1])  ^ unsignedByte(password.getKey(0)));
+	        for (int i = 0; i < blockList.size(); ++i) {
+	            int offset = blockList.get(i) * blockSize;
+	            block.refreshData(baseData, location);
+	            byte ring = password.getRing(location / blockSize);
 	            byte key;
-	            for (j = 0; j < 4; ++j) {
-	            	key = password.getKey(i + j);
-	            	block.whisping(j, password.getKey(key), key);
+	            for (j = 0; j < blockSize; ++j) {
+	                key = password.getKey(location + j);
+	                block.whisping(j, key, password.getKey(key));
 	            }
-	            block.deBlockSwap(ring);
-	            block.accept(oData, i);
+	            block.deBlockSwapWithKey(password, ring);
+	            block.accept(oData, offset);
+	            location = location + blockSize;
+	        }
+	        for (int i = 0; i < oData.length; ++i) {
+	        	oData[i] = (byte)(oData[i] ^ unsignedByte(dataSalt));
 	        }
 	        return oData;
 		}

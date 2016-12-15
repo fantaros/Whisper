@@ -1,34 +1,47 @@
 package io.github.fantaros.cipher.basement;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.github.fantaros.cipher.data.WhisperKey;
+
 public class WhisperBlock {
     private Logix logix;
     private byte[] valuearray;
+    private int blockSize;
 
     public byte get(int offset) throws IllegalArgumentException {
-        if (offset < 4) {
+        if (offset < this.blockSize) {
         	return valuearray[offset];
         } else {
-        	throw new IllegalArgumentException("block get offset > 4");
+        	throw new IllegalArgumentException("block get offset > blockSize");
         }
     }
 
     public void set(int offset, byte value) throws IllegalArgumentException {
-        if (offset < 4)
+        if (offset < this.blockSize)
             valuearray[offset] = value;
         else
-            throw new IllegalArgumentException("block set offset > 4");
+            throw new IllegalArgumentException("block set offset > blockSize");
     }
 
 
-    public WhisperBlock() {
+    private WhisperBlock() {
+    	this.blockSize = 3;
         valuearray = new byte[]{
-            0,0,0,0
+            0,0,0
         };
         logix = new Logix();
     }
+    
+    public WhisperBlock(int blockSize) {
+    	this.blockSize = blockSize;
+    	this.valuearray = new byte[this.blockSize];
+    	logix = new Logix();
+    }
 
-    public void setValue(byte[] input, int offset) {
-        for (int i = 0; i < 4; i++) {
+    public void refreshData(byte[] input, int offset) {
+        for (int i = 0; i < this.blockSize; i++) {
             if (offset + i < input.length) {
             	valuearray[i] = input[offset + i];
             }
@@ -37,43 +50,65 @@ public class WhisperBlock {
             }
         }
     }
-
-    public WhisperBlock(byte a0, byte a1, byte a2, byte a3) {
-        valuearray = new byte[4];
-        valuearray[0] = a0;
-        valuearray[1] = a1;
-        valuearray[2] = a2;
-        valuearray[3] = a3;
+    
+    public static int unsignedByte(int data) {
+		if (data >= 0) {
+			return data;
+		} else {
+			return 256 + data;
+		}
+	}
+    
+    public void blockSwapWithKey(WhisperKey key, byte swaper) {
+        List<Integer> swapList = key.buildSwapArray(this.blockSize, unsignedByte(swaper));
+        byte tmp;
+        int location = 0;
+        for (int o = 0; o < swapList.size(); ++o) {
+        	int offset = swapList.get(o)==null?-1:swapList.get(o);
+        	if (offset > 0) {
+        		tmp = this.valuearray[location];
+        		this.valuearray[location] = this.valuearray[offset];
+        		this.valuearray[offset] = tmp;
+        	}
+        	++location;
+        }
+    }
+    
+    private List<Integer> reverseSwapArray(List<Integer> swapList) {
+        if (swapList == null) {
+            return null;
+        }
+        List<Integer> anti = new ArrayList<Integer>(swapList);
+        int start = 0, end = swapList.size() - 1;
+        while (start < end) {
+        	int tmp = anti.get(start);
+        	anti.set(start, anti.get(end));
+        	anti.set(end, tmp);
+        	
+        	++start;
+        	--end;
+        }
+        return anti;
     }
 
-    private byte[] newarray;
-
-    public void blockSwap(byte swaper) {
-        newarray = new byte[4];
-        newarray[0] = valuearray[(byte) ((swaper & 0xc0) >>> 6)];
-        newarray[1] = valuearray[(byte) ((swaper & 0x30) >>> 4)];
-        newarray[2] = valuearray[(byte) ((swaper & 0x0c) >>> 2)];
-        newarray[3] = valuearray[swaper & 0x03];
-        valuearray = newarray;
+    public void deBlockSwapWithKey(WhisperKey key, byte swaper) {
+        List<Integer> swapList = this.reverseSwapArray(key.buildSwapArray(this.blockSize, unsignedByte(swaper)));
+        byte tmp;
+        int location = swapList.size() - 1;
+        for (int o = 0; (o < swapList.size() && location >= 0); ++o) {
+        	int offset = swapList.get(o) == null ? -1 : swapList.get(o);
+        	if (offset > 0) {
+        		tmp = this.valuearray[location];
+        		this.valuearray[location] = this.valuearray[offset];
+        		this.valuearray[offset] = tmp;
+        	}
+        	--location;
+        }
     }
 
-    public void deBlockSwap(byte swaper) {
-        newarray = new byte[4];
-        newarray[(byte) ((swaper & 0xc0) >>> 6)] = valuearray[0];
-        newarray[(byte) ((swaper & 0x30) >>> 4)] = valuearray[1];
-        newarray[(byte) ((swaper & 0x0c) >>> 2)] = valuearray[2];
-        newarray[swaper & 0x03] = valuearray[3];
-        valuearray = newarray;
-    }
-
-//    private void swap(int f, int t) {
-//        valuearray[f] = (byte) (valuearray[f] ^ valuearray[t]);
-//        valuearray[t] = (byte) (valuearray[f] ^ valuearray[t]);
-//        valuearray[f] = (byte) (valuearray[f] ^ valuearray[t]);
-//    }
 
     public void accept(byte[] output, int offset) {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < this.blockSize; i++) {
             if (offset + i < output.length) {
                 output[offset + i] = valuearray[i];
             }
