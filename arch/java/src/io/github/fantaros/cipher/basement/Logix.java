@@ -7,7 +7,7 @@ public class Logix {
     private int[] logixTable;
 
     public Logix() {
-        init(198848);
+        init(1989215);
         System.out.println("logix");
     }
 
@@ -39,7 +39,7 @@ public class Logix {
     }
 
     public byte logix (byte op1, byte op2, byte s) {
-        return (byte)(((int)op1) ^ ((int)op2) ^ ((int)mappedLogixTableH(s)));
+        return (byte)((unsignedByte(op1)) ^ (unsignedByte(op2)) ^ (unsignedByte(mappedLogixTableH(s))));
     }
     
     private int unsignedByte(byte data) {

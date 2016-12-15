@@ -11,10 +11,10 @@ public class WhisperAlgorithm {
 	public static byte[] addHeader(byte[] baseData) {
 		int len = baseData.length;
 		byte[] newArray = new byte[len + 4];
-		newArray[0] = (byte)(unsignedByte(((len & 0xff000000)>>>24) & 0xff) ^ ((byte)'w'));
-		newArray[1] = (byte)(unsignedByte(((len & 0x00ff0000)>>>16) & 0xff) ^ ((byte)'s'));
-		newArray[2] = (byte)(unsignedByte(((len & 0x0000ff00)>>>8) & 0xff) ^ ((byte)'p'));
-		newArray[3] = (byte)(unsignedByte((len & 0x000000ff) & 0xff) ^ ((byte)'f'));
+		newArray[2] = (byte)(unsignedByte(((len & 0xff000000)>>>24) & 0xff) ^ ((byte)'w'));
+		newArray[0] = (byte)(unsignedByte(((len & 0x00ff0000)>>>16) & 0xff) ^ ((byte)'s'));
+		newArray[3] = (byte)(unsignedByte(((len & 0x0000ff00)>>>8) & 0xff) ^ ((byte)'p'));
+		newArray[1] = (byte)(unsignedByte((len & 0x000000ff) & 0xff) ^ ((byte)'f'));
 		for (int i = 0; i < len; ++i) {
 			newArray[i + 4] = baseData[i];
 		}
@@ -22,10 +22,10 @@ public class WhisperAlgorithm {
 	}
 
 	public static int decodeHeader (byte[] decrypted) {
-		long i0 = (decrypted[0] ^ ((byte) 'w')) << 24;
-		int i1 = (decrypted[1] ^ ((byte) 's')) << 16;
-		int i2 = (decrypted[2] ^ ((byte) 'p')) << 8;
-		int i3 = (decrypted[3] ^ ((byte) 'f'));
+		long i0 = (decrypted[2] ^ ((byte) 'w')) << 24;
+		int i1 = (decrypted[0] ^ ((byte) 's')) << 16;
+		int i2 = (decrypted[3] ^ ((byte) 'p')) << 8;
+		int i3 = (decrypted[1] ^ ((byte) 'f'));
 		long length = (i0 | i1 | i2 | i3);
 		return (int) length;
 	}

@@ -65,7 +65,7 @@ public class WhisperBlock {
         int location = 0;
         for (int o = 0; o < swapList.size(); ++o) {
         	int offset = swapList.get(o)==null?-1:swapList.get(o);
-        	if (offset > 0) {
+        	if (offset >= 0) {
         		tmp = this.valuearray[location];
         		this.valuearray[location] = this.valuearray[offset];
         		this.valuearray[offset] = tmp;
@@ -97,7 +97,7 @@ public class WhisperBlock {
         int location = swapList.size() - 1;
         for (int o = 0; (o < swapList.size() && location >= 0); ++o) {
         	int offset = swapList.get(o) == null ? -1 : swapList.get(o);
-        	if (offset > 0) {
+        	if (offset >= 0) {
         		tmp = this.valuearray[location];
         		this.valuearray[location] = this.valuearray[offset];
         		this.valuearray[offset] = tmp;

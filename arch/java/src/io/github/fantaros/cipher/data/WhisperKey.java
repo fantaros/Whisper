@@ -107,7 +107,7 @@ public class WhisperKey {
 
 	private void setupKey (){
 		if(this.password == null || this.password.length() < 1) {
-			this.password = "1234567890";
+			this.password = "???????";
 		}
 		byte [] passwordData = this.password.getBytes(Charset.forName("UTF8"));
 		int i = 0;
@@ -131,6 +131,10 @@ public class WhisperKey {
 		for(i = 0; i < mutableKeys.size(); ++i) {
 			this.whisperStoredKey[i] = mutableKeys.get(i).byteValue();
 		}
+		if (!this.keySaltCaculated) {
+	        this.keySalt = this.getKeySalt();
+	        this.keySaltCaculated = true;
+	    }
 	}
 	
 	private int unsignedByte(int data) {
