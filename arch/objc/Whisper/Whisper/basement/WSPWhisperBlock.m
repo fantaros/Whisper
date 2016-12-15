@@ -87,7 +87,7 @@
     NSArray *swapArray = [key buildSwapArray:self.blockSize salt:salt];
     unsigned char tmp;
     NSUInteger location = 0;
-    for (NSInteger o = 0; o < swapArray.count; ++o) {
+    for (NSInteger o = 0; o < swapArray.count - 1; ++o) {
         NSUInteger offset = [swapArray[o] unsignedIntegerValue];
         tmp = [self.bytes[location] unsignedCharValue];
         self.bytes[location] = [self.bytes[offset] copy];
@@ -120,7 +120,7 @@
     swapArray = [self reverseSwapArray:swapArray];
     unsigned char tmp;
     NSUInteger location = swapArray.count - 1;
-    for (NSInteger o = 0; (o < swapArray.count && location >= 0); ++o) {
+    for (NSInteger o = 0; (o < swapArray.count && location > 0); ++o) {
         NSUInteger offset = [swapArray[o] unsignedIntegerValue];
         tmp = [self.bytes[location] unsignedCharValue];
         self.bytes[location] = [self.bytes[offset] copy];
