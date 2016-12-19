@@ -29,15 +29,17 @@ window.Whisper = (function AppDomain($){
     }
 
 	$.WhisperKey = function (password, keyLength) {
+		var whisperStoredKey = [];
+
         if(typeof password === "string") {
             var pwd = password, keylen = keyLength, passwordBytes = stringGetBytes(password);
             return {
-                getKey : function (index) {
-                    
-                },
-                getRing : function (index) {
+                getKey : function getKey (index) {
+			
+				},
+                getRing : function getRing (index) {
 
-                }
+				}
             };
         }
         return {
