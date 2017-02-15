@@ -26,13 +26,13 @@ public class WhisperBlock {
     }
 
 
-    private WhisperBlock() {
-    	this.blockSize = 3;
-        valuearray = new byte[]{
-            0,0,0
-        };
-        logix = new Logix();
-    }
+//    private WhisperBlock() {
+//    	this.blockSize = 3;
+//        valuearray = new byte[]{
+//            0,0,0
+//        };
+//        logix = new Logix();
+//    }
     
     public WhisperBlock(int blockSize) {
     	this.blockSize = blockSize;
@@ -63,7 +63,7 @@ public class WhisperBlock {
         List<Integer> swapList = key.buildSwapArray(this.blockSize, unsignedByte(swaper));
         byte tmp;
         int location = 0;
-        for (int o = 0; o < swapList.size() - 1; ++o) {
+        for (int o = 0; o < swapList.size(); ++o) {
         	int offset = swapList.get(o)==null?-1:swapList.get(o);
         	if (offset >= 0) {
         		tmp = this.valuearray[location];

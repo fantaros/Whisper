@@ -61,8 +61,8 @@
 - (void) lightDataWithSalt:(unsigned char) salt {
     if (_byteArray.count > 0) {
         for (NSInteger i = 0; i < _byteArray.count; ++i) {
-            unsigned char ad = [_byteArray[i] unsignedCharValue];
-            _byteArray[i] = [NSNumber numberWithUnsignedChar:(ad ^ salt)];
+            unsigned char byteData = [_byteArray[i] unsignedCharValue];
+            _byteArray[i] = [NSNumber numberWithUnsignedChar:(byteData ^ salt)];
         }
     }
 }

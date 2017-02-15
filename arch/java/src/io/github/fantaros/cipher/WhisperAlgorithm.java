@@ -1,6 +1,5 @@
 package io.github.fantaros.cipher;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 import io.github.fantaros.cipher.basement.WhisperBlock;

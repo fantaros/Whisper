@@ -17,5 +17,6 @@ public class Entry {
     	WhisperKey nkey = WhisperKey.whisperKeyWithPassword("fantasy88");
     	byte[] nout = WhisperAlgorithm.decrypto(output, nkey, 3);
     	System.out.println(output);
+    	System.out.println(nout);
     }
 }

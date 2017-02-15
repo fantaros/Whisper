@@ -90,7 +90,7 @@
     for (NSInteger o = 0; o < swapArray.count; ++o) {
         NSUInteger offset = [swapArray[o] unsignedIntegerValue];
         tmp = [self.bytes[location] unsignedCharValue];
-        self.bytes[location] = [self.bytes[offset] copy];
+        self.bytes[location] = [NSNumber numberWithUnsignedChar:[self.bytes[offset] unsignedCharValue]];
         self.bytes[offset] = [NSNumber numberWithUnsignedChar:tmp];
         ++location;
     }
