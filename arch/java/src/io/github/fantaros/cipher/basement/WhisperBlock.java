@@ -95,7 +95,7 @@ public class WhisperBlock {
         List<Integer> swapList = this.reverseSwapArray(key.buildSwapArray(this.blockSize, unsignedByte(swaper)));
         byte tmp;
         int location = swapList.size() - 1;
-        for (int o = 0; (o < swapList.size() && location > 0); ++o) {
+        for (int o = 0; (o < swapList.size() && location >= 0); ++o) {
         	int offset = swapList.get(o) == null ? -1 : swapList.get(o);
         	if (offset >= 0) {
         		tmp = this.valuearray[location];
